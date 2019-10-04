@@ -1,0 +1,5 @@
+rootProject.name = 'NorthSerializer'
+
+include(":serializer-platform")
+include(":serializer-msgpack")
+include(":serializer-mongodb")
