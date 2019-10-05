@@ -1,4 +1,4 @@
-package pl.north93.serializer.platform;
+package pl.north93.serializer.platform.template.field;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

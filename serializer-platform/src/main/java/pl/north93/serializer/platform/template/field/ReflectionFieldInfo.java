@@ -1,4 +1,4 @@
-package pl.north93.serializer.platform.impl;
+package pl.north93.serializer.platform.template.field;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
@@ -6,10 +6,9 @@ import java.util.Optional;
 
 import lombok.ToString;
 import pl.north93.serializer.platform.annotations.NorthField;
-import pl.north93.serializer.platform.FieldInfo;
 
 @ToString
-/*default*/ final class ReflectionFieldInfo implements FieldInfo
+public final class ReflectionFieldInfo implements FieldInfo
 {
     private final String name;
     private final Type   type;

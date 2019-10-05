@@ -8,8 +8,8 @@ import org.bson.BsonSerializationException;
 
 import pl.north93.serializer.mongodb.MongoDbDeserializationContext;
 import pl.north93.serializer.mongodb.MongoDbSerializationContext;
-import pl.north93.serializer.platform.FieldInfo;
 import pl.north93.serializer.platform.template.Template;
+import pl.north93.serializer.platform.template.field.FieldInfo;
 
 public class MongoDbUuidTemplate implements Template<UUID, MongoDbSerializationContext, MongoDbDeserializationContext>
 {

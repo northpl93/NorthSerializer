@@ -1,4 +1,4 @@
-package pl.north93.serializer.platform.impl;
+package pl.north93.serializer.platform.reflect.impl;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -8,7 +8,7 @@ import java.lang.invoke.MethodType;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import pl.north93.serializer.platform.InstanceCreator;
+import pl.north93.serializer.platform.reflect.InstanceCreator;
 
 /*default*/ class MethodHandleConstructorCreator<T> implements InstanceCreator<T>
 {

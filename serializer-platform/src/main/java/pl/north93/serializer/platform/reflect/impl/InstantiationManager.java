@@ -1,10 +1,10 @@
-package pl.north93.serializer.platform.impl;
+package pl.north93.serializer.platform.reflect.impl;
 
 import java.util.Map;
 import java.util.WeakHashMap;
 
 import lombok.ToString;
-import pl.north93.serializer.platform.InstanceCreator;
+import pl.north93.serializer.platform.reflect.InstanceCreator;
 
 @ToString
 /*default*/ class InstantiationManager

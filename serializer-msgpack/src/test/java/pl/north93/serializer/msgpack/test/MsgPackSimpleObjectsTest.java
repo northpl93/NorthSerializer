@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import pl.north93.serializer.msgpack.MsgPackSerializationFormat;
 import pl.north93.serializer.platform.NorthSerializer;
-import pl.north93.serializer.platform.impl.NorthSerializerImpl;
+import pl.north93.serializer.platform.template.impl.NorthSerializerImpl;
 
 public class MsgPackSimpleObjectsTest
 {

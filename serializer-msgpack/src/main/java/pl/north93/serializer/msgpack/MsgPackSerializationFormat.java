@@ -8,15 +8,17 @@ import java.util.Set;
 import java.util.UUID;
 
 import pl.north93.serializer.msgpack.template.MsgPackListTemplate;
-import pl.north93.serializer.platform.SerializationFormat;
-import pl.north93.serializer.platform.TypePredictor;
-import pl.north93.serializer.platform.template.ExactTypeIgnoreGenericFilter;
+import pl.north93.serializer.platform.format.SerializationConfiguration;
+import pl.north93.serializer.platform.format.SerializationFormat;
+import pl.north93.serializer.platform.format.TypePredictor;
+import pl.north93.serializer.platform.format.DeserializationConfiguration;
+import pl.north93.serializer.platform.template.filter.ExactTypeIgnoreGenericFilter;
 import pl.north93.serializer.platform.template.TemplateEngine;
 import pl.north93.serializer.msgpack.template.MsgPackArrayTemplate;
 import pl.north93.serializer.msgpack.template.MsgPackMapTemplate;
 import pl.north93.serializer.msgpack.template.MsgPackSetTemplate;
 import pl.north93.serializer.msgpack.template.MsgPackUuidTemplate;
-import pl.north93.serializer.platform.template.AnyInheritedTypeFilter;
+import pl.north93.serializer.platform.template.filter.AnyInheritedTypeFilter;
 
 public class MsgPackSerializationFormat implements SerializationFormat<byte[], MsgPackSerializationContext, MsgPackDeserializationContext>
 {
@@ -37,15 +39,15 @@ public class MsgPackSerializationFormat implements SerializationFormat<byte[], M
     }
 
     @Override
-    public MsgPackSerializationContext createSerializationContext(final TemplateEngine templateEngine)
+    public SerializationConfiguration<MsgPackSerializationContext> createDefaultSerializationConfig()
     {
-        return new MsgPackSerializationContext(templateEngine);
+        return new MsgPackSerializationConfiguration();
     }
 
     @Override
-    public MsgPackDeserializationContext createDeserializationContext(final TemplateEngine templateEngine, final byte[] serializedData)
+    public DeserializationConfiguration<byte[], MsgPackDeserializationContext> createDefaultDeserializationConfig()
     {
-        return new MsgPackDeserializationContext(templateEngine, serializedData);
+        return new MsgPackDeserializationConfiguration();
     }
 
     @Nullable

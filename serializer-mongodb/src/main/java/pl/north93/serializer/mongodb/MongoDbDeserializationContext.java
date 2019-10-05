@@ -12,9 +12,9 @@ import org.bson.types.ObjectId;
 
 import lombok.ToString;
 import pl.north93.serializer.mongodb.reader.NorthBsonReader;
-import pl.north93.serializer.platform.FieldInfo;
 import pl.north93.serializer.platform.context.DeserializationContext;
 import pl.north93.serializer.platform.template.TemplateEngine;
+import pl.north93.serializer.platform.template.field.FieldInfo;
 
 @ToString
 public class MongoDbDeserializationContext extends DeserializationContext

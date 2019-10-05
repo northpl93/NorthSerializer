@@ -1,4 +1,4 @@
-package pl.north93.serializer.platform.impl;
+package pl.north93.serializer.platform.template.impl;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -6,22 +6,21 @@ import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.invoke.MethodType;
 import java.lang.reflect.Field;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
+import lombok.ToString;
 import pl.north93.serializer.platform.template.ITemplateElement;
 import pl.north93.serializer.platform.template.Template;
-import pl.north93.serializer.platform.FieldInfo;
+import pl.north93.serializer.platform.template.field.FieldInfo;
 
+@ToString(of = {"field", "template"})
 class MethodHandleTemplateElement implements ITemplateElement
 {
-    private static final Lookup       LOOKUP      = MethodHandles.lookup();
-    private static final MethodType   GETTER_TYPE = MethodType.methodType(Object.class, Object.class);
-    private static final MethodType   SETTER_TYPE = MethodType.methodType(void.class, Object.class, Object.class);
-    private final        FieldInfo    field;
-    private final        MethodHandle getter;
-    private final        MethodHandle setter;
-    private final        Template     template;
+    private static final Lookup LOOKUP = MethodHandles.lookup();
+    private static final MethodType GETTER_TYPE = MethodType.methodType(Object.class, Object.class);
+    private static final MethodType SETTER_TYPE = MethodType.methodType(void.class, Object.class, Object.class);
+    private final FieldInfo field;
+    private final MethodHandle getter;
+    private final MethodHandle setter;
+    private final Template template;
 
     public MethodHandleTemplateElement(final Field field, final FieldInfo fieldInfo, final Template template)
     {
@@ -74,11 +73,5 @@ class MethodHandleTemplateElement implements ITemplateElement
     public Template getTemplate()
     {
         return this.template;
-    }
-
-    @Override
-    public String toString()
-    {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString()).append("getter", this.getter).append("setter", this.setter).append("template", this.template).toString();
     }
 }

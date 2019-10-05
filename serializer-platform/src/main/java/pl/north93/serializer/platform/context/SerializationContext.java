@@ -1,7 +1,7 @@
 package pl.north93.serializer.platform.context;
 
 import pl.north93.serializer.platform.template.TemplateEngine;
-import pl.north93.serializer.platform.FieldInfo;
+import pl.north93.serializer.platform.template.field.FieldInfo;
 
 public abstract class SerializationContext extends Context
 {

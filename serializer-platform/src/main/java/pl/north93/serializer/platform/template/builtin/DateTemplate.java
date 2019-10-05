@@ -2,7 +2,7 @@ package pl.north93.serializer.platform.template.builtin;
 
 import java.util.Date;
 
-import pl.north93.serializer.platform.FieldInfo;
+import pl.north93.serializer.platform.template.field.FieldInfo;
 import pl.north93.serializer.platform.context.DeserializationContext;
 import pl.north93.serializer.platform.context.SerializationContext;
 import pl.north93.serializer.platform.template.Template;

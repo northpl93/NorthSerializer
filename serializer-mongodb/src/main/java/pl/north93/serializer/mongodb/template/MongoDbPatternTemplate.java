@@ -9,8 +9,8 @@ import org.bson.BsonWriter;
 
 import pl.north93.serializer.mongodb.MongoDbDeserializationContext;
 import pl.north93.serializer.mongodb.MongoDbSerializationContext;
-import pl.north93.serializer.platform.FieldInfo;
 import pl.north93.serializer.platform.template.Template;
+import pl.north93.serializer.platform.template.field.FieldInfo;
 
 public class MongoDbPatternTemplate implements Template<Pattern, MongoDbSerializationContext, MongoDbDeserializationContext>
 {
@@ -103,8 +103,8 @@ public class MongoDbPatternTemplate implements Template<Pattern, MongoDbSerializ
 
         private static final Map<Character, RegexFlag> BY_CHARACTER = new HashMap<>();
 
-        private final int    javaFlag;
-        private final char   flagChar;
+        private final int javaFlag;
+        private final char flagChar;
         private final String unsupported;
 
         static

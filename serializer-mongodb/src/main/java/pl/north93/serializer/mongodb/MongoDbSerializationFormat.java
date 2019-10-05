@@ -7,23 +7,26 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
+import org.bson.BsonBinaryWriter;
 import org.bson.BsonReader;
-import org.bson.BsonWriter;
 import org.bson.Document;
+import org.bson.io.BasicOutputBuffer;
 import org.bson.types.ObjectId;
 
+import pl.north93.serializer.mongodb.template.MongoDbDocumentTemplate;
 import pl.north93.serializer.mongodb.template.MongoDbListTemplate;
 import pl.north93.serializer.mongodb.template.MongoDbMapTemplate;
-import pl.north93.serializer.mongodb.template.MongoDbUuidTemplate;
-import pl.north93.serializer.mongodb.template.MongoDbDocumentTemplate;
 import pl.north93.serializer.mongodb.template.MongoDbObjectIdTemplate;
 import pl.north93.serializer.mongodb.template.MongoDbPatternTemplate;
-import pl.north93.serializer.platform.SerializationFormat;
-import pl.north93.serializer.platform.TypePredictor;
-import pl.north93.serializer.platform.template.AnyInheritedTypeFilter;
-import pl.north93.serializer.platform.template.ExactTypeIgnoreGenericFilter;
+import pl.north93.serializer.mongodb.template.MongoDbUuidTemplate;
+import pl.north93.serializer.platform.format.DeserializationConfiguration;
+import pl.north93.serializer.platform.format.SerializationConfiguration;
+import pl.north93.serializer.platform.format.SerializationFormat;
+import pl.north93.serializer.platform.format.TypePredictor;
 import pl.north93.serializer.platform.template.TemplateEngine;
 import pl.north93.serializer.platform.template.TemplatePriority;
+import pl.north93.serializer.platform.template.filter.AnyInheritedTypeFilter;
+import pl.north93.serializer.platform.template.filter.ExactTypeIgnoreGenericFilter;
 
 public class MongoDbSerializationFormat implements SerializationFormat<BsonReader, MongoDbSerializationContext, MongoDbDeserializationContext>
 {
@@ -42,16 +45,15 @@ public class MongoDbSerializationFormat implements SerializationFormat<BsonReade
     }
 
     @Override
-    public MongoDbSerializationContext createSerializationContext(final TemplateEngine templateEngine)
+    public SerializationConfiguration<MongoDbSerializationContext> createDefaultSerializationConfig()
     {
-        final BsonWriter writer = MongoDbCodec.writer.get();
-        return new MongoDbSerializationContext(templateEngine, writer);
+        return new MongoDbSerializationConfiguration(new BsonBinaryWriter(new BasicOutputBuffer()));
     }
 
     @Override
-    public MongoDbDeserializationContext createDeserializationContext(final TemplateEngine templateEngine, final BsonReader serializedData)
+    public DeserializationConfiguration<BsonReader, MongoDbDeserializationContext> createDefaultDeserializationConfig()
     {
-        return new MongoDbDeserializationContext(templateEngine, serializedData);
+        return new MongoDbDeserializationConfiguration();
     }
 
     @Nullable

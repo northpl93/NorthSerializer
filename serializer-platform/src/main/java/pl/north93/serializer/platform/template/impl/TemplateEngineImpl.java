@@ -1,13 +1,11 @@
-package pl.north93.serializer.platform.impl;
+package pl.north93.serializer.platform.template.impl;
 
 import static java.lang.reflect.Modifier.isAbstract;
 
 
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Map;
 import java.util.TreeMap;
@@ -15,16 +13,14 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import pl.north93.serializer.platform.InstanceCreator;
-import pl.north93.serializer.platform.TypePredictor;
+import pl.north93.serializer.platform.format.TypePredictor;
 import pl.north93.serializer.platform.context.DeserializationContext;
 import pl.north93.serializer.platform.context.SerializationContext;
+import pl.north93.serializer.platform.reflect.InstanceCreator;
+import pl.north93.serializer.platform.reflect.ReflectionEngine;
 import pl.north93.serializer.platform.template.Template;
 import pl.north93.serializer.platform.template.TemplateEngine;
-import pl.north93.serializer.platform.template.TemplateFilter;
-import pl.north93.serializer.platform.ClassResolver;
-import pl.north93.serializer.platform.TemplateFactory;
-import pl.north93.serializer.platform.template.ExactTypeIgnoreGenericFilter;
+import pl.north93.serializer.platform.template.TemplateFactory;
 import pl.north93.serializer.platform.template.builtin.BooleanTemplate;
 import pl.north93.serializer.platform.template.builtin.ByteTemplate;
 import pl.north93.serializer.platform.template.builtin.DateTemplate;
@@ -38,20 +34,21 @@ import pl.north93.serializer.platform.template.builtin.IntegerTemplate;
 import pl.north93.serializer.platform.template.builtin.LongTemplate;
 import pl.north93.serializer.platform.template.builtin.ShortTemplate;
 import pl.north93.serializer.platform.template.builtin.StringTemplate;
+import pl.north93.serializer.platform.template.filter.ExactTypeIgnoreGenericFilter;
+import pl.north93.serializer.platform.template.filter.TemplateFilter;
 
 /*default*/ class TemplateEngineImpl implements TemplateEngine
 {
-    private final ClassResolver                                               classResolver;
+    private final ReflectionEngine reflectionEngine;
     private final TypePredictor<SerializationContext, DeserializationContext> typePredictor;
-    private final InstantiationManager                                        instantiationManager = new InstantiationManager();
-    private final ReadWriteLock                                               templatesLock        = new ReentrantReadWriteLock();
-    private final TemplateFactory                                             templateFactory      = new TemplateFactoryImpl();
-    private final Map<TemplateFilter, Template<?, ?, ?>>                      templates            = new TreeMap<>();
+    private final ReadWriteLock templatesLock = new ReentrantReadWriteLock();
+    private final TemplateFactory templateFactory = new TemplateFactoryImpl();
+    private final Map<TemplateFilter, Template<?, ?, ?>> templates = new TreeMap<>();
 
     @SuppressWarnings("unchecked")
-    public TemplateEngineImpl(final ClassResolver classResolver, final TypePredictor<?, ?> typePredictor)
+    public TemplateEngineImpl(final ReflectionEngine reflectionEngine, final TypePredictor<?, ?> typePredictor)
     {
-        this.classResolver = classResolver;
+        this.reflectionEngine = reflectionEngine;
         this.typePredictor = (TypePredictor<SerializationContext, DeserializationContext>) typePredictor;
 
         // special default types
@@ -75,75 +72,9 @@ import pl.north93.serializer.platform.template.builtin.StringTemplate;
     }
 
     @Override
-    public Class<?> findClass(final String name)
-    {
-        return this.classResolver.findClass(name);
-    }
-
-    @Override
-    public Class<?> getRawClassFromType(final Type type)
-    {
-        if (type instanceof Class)
-        {
-            return (Class<?>) type;
-        }
-        else if (type instanceof ParameterizedType)
-        {
-            final ParameterizedType parameterizedType = (ParameterizedType) type;
-            return (Class<?>) parameterizedType.getRawType();
-        }
-
-        throw new IllegalArgumentException(type.getTypeName());
-    }
-
-    @Override
-    public Type[] getTypeParameters(final Type type)
-    {
-        if (type instanceof Class)
-        {
-            final Class clazz = (Class) type;
-            final Type[] types = new Type[clazz.getTypeParameters().length];
-            Arrays.fill(types, Object.class);
-            return types;
-        }
-        else if (type instanceof ParameterizedType)
-        {
-            final ParameterizedType parameterizedType = (ParameterizedType) type;
-            return parameterizedType.getActualTypeArguments();
-        }
-
-        throw new IllegalArgumentException(type.getTypeName());
-    }
-
-    @Override
-    public Type createParameterizedType(final Class clazz, final Type[] parameters)
-    {
-        return new ParameterizedType()
-        {
-            @Override
-            public Type[] getActualTypeArguments()
-            {
-                return parameters;
-            }
-
-            @Override
-            public Type getRawType()
-            {
-                return clazz;
-            }
-
-            @Override
-            public Type getOwnerType()
-            {
-                return null;
-            }
-        };
-    }
-
-    @Override
     public boolean isNeedsDynamicResolution(final Type type)
     {
-        final Class<?> clazz = this.getRawClassFromType(type);
+        final Class<?> clazz = this.reflectionEngine.getRawClassFromType(type);
         return clazz.isInterface() || isAbstract(clazz.getModifiers()) || clazz == Object.class;
     }
 
@@ -157,12 +88,6 @@ import pl.north93.serializer.platform.template.builtin.StringTemplate;
     public TypePredictor<SerializationContext, DeserializationContext> getTypePredictor()
     {
         return this.typePredictor;
-    }
-
-    @Override
-    public <T> InstanceCreator<T> getInstanceCreator(final Class<T> clazz)
-    {
-        return this.instantiationManager.getInstanceCreator(clazz);
     }
 
     @Override
@@ -221,5 +146,35 @@ import pl.north93.serializer.platform.template.builtin.StringTemplate;
     private Template<Object, SerializationContext, DeserializationContext> genericCast(final Template<?, ?, ?> template)
     {
         return (Template<Object, SerializationContext, DeserializationContext>) template;
+    }
+
+    @Override
+    public Class<?> findClass(final String name)
+    {
+        return this.reflectionEngine.findClass(name);
+    }
+
+    @Override
+    public Class<?> getRawClassFromType(final Type type)
+    {
+        return this.reflectionEngine.getRawClassFromType(type);
+    }
+
+    @Override
+    public Type[] getTypeParameters(final Type type)
+    {
+        return this.reflectionEngine.getTypeParameters(type);
+    }
+
+    @Override
+    public Type createParameterizedType(final Class clazz, final Type[] parameters)
+    {
+        return this.reflectionEngine.createParameterizedType(clazz, parameters);
+    }
+
+    @Override
+    public <T> InstanceCreator<T> getInstanceCreator(final Class<T> clazz)
+    {
+        return this.reflectionEngine.getInstanceCreator(clazz);
     }
 }

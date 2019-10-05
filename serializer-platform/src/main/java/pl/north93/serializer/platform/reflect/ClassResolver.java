@@ -1,4 +1,4 @@
-package pl.north93.serializer.platform;
+package pl.north93.serializer.platform.reflect;
 
 public interface ClassResolver
 {

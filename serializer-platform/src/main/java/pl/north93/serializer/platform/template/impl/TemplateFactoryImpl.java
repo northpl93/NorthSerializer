@@ -1,8 +1,16 @@
-package pl.north93.serializer.platform.impl;
+package pl.north93.serializer.platform.template.impl;
+
+import static java.lang.reflect.Modifier.isStatic;
+import static java.lang.reflect.Modifier.isTransient;
+
+
+import java.lang.reflect.Field;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.apache.commons.lang3.reflect.FieldUtils;
 
 import lombok.ToString;
-import org.apache.commons.lang3.reflect.FieldUtils;
-import pl.north93.serializer.platform.TemplateFactory;
 import pl.north93.serializer.platform.annotations.NorthCustomTemplate;
 import pl.north93.serializer.platform.annotations.NorthTransient;
 import pl.north93.serializer.platform.context.DeserializationContext;
@@ -10,13 +18,8 @@ import pl.north93.serializer.platform.context.SerializationContext;
 import pl.north93.serializer.platform.template.ITemplateElement;
 import pl.north93.serializer.platform.template.Template;
 import pl.north93.serializer.platform.template.TemplateEngine;
-
-import java.lang.reflect.Field;
-import java.util.LinkedList;
-import java.util.List;
-
-import static java.lang.reflect.Modifier.isStatic;
-import static java.lang.reflect.Modifier.isTransient;
+import pl.north93.serializer.platform.template.TemplateFactory;
+import pl.north93.serializer.platform.template.field.ReflectionFieldInfo;
 
 @ToString(onlyExplicitlyIncluded = true)
 /*default*/ class TemplateFactoryImpl implements TemplateFactory

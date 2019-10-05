@@ -1,4 +1,4 @@
-package pl.north93.serializer.platform.impl;
+package pl.north93.serializer.platform.reflect.impl;
 
 import java.lang.reflect.Field;
 

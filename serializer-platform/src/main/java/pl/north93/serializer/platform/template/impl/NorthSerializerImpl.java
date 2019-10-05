@@ -1,25 +1,30 @@
-package pl.north93.serializer.platform.impl;
+package pl.north93.serializer.platform.template.impl;
 
 import java.lang.reflect.Type;
 
 import pl.north93.serializer.platform.NorthSerializer;
-import pl.north93.serializer.platform.SerializationFormat;
+import pl.north93.serializer.platform.format.DeserializationConfiguration;
+import pl.north93.serializer.platform.format.SerializationConfiguration;
+import pl.north93.serializer.platform.format.SerializationFormat;
 import pl.north93.serializer.platform.context.DeserializationContext;
 import pl.north93.serializer.platform.context.SerializationContext;
-import pl.north93.serializer.platform.template.Template;
+import pl.north93.serializer.platform.reflect.ClassResolver;
+import pl.north93.serializer.platform.reflect.impl.DefaultClassResolver;
+import pl.north93.serializer.platform.reflect.impl.ReflectionEngineImpl;
 import pl.north93.serializer.platform.template.TemplateEngine;
-import pl.north93.serializer.platform.ClassResolver;
-import pl.north93.serializer.platform.CustomFieldInfo;
-import pl.north93.serializer.platform.FieldInfo;
+import pl.north93.serializer.platform.template.field.CustomFieldInfo;
+import pl.north93.serializer.platform.template.field.FieldInfo;
 
 public class NorthSerializerImpl<OUTPUT> implements NorthSerializer<OUTPUT>
 {
-    private final TemplateEngine                    templateEngine;
+    private final TemplateEngine templateEngine;
     private final SerializationFormat<OUTPUT, ?, ?> serializationFormat;
 
     public NorthSerializerImpl(final SerializationFormat<OUTPUT, ?, ?> serializationFormat, final ClassResolver classResolver)
     {
-        this.templateEngine = new TemplateEngineImpl(classResolver, serializationFormat.getTypePredictor());
+        final ReflectionEngineImpl reflectionEngine = new ReflectionEngineImpl(classResolver);
+
+        this.templateEngine = new TemplateEngineImpl(reflectionEngine, serializationFormat.getTypePredictor());
         this.serializationFormat = serializationFormat;
         this.serializationFormat.configure(this.templateEngine);
     }
@@ -31,10 +36,10 @@ public class NorthSerializerImpl<OUTPUT> implements NorthSerializer<OUTPUT>
 
     @SuppressWarnings("unchecked")
     @Override
-    public OUTPUT serialize(final Type type, final Object object)
+    public OUTPUT serialize(final Type type, final Object object, final SerializationConfiguration<?> configuration)
     {
-        final SerializationContext context = this.serializationFormat.createSerializationContext(this.templateEngine);
-        final Template<Object, SerializationContext, DeserializationContext> template = this.templateEngine.getTemplate(type);
+        final SerializationContext context = configuration.createContext(this.templateEngine);
+        final var template = this.templateEngine.getTemplate(type);
 
         try
         {
@@ -49,10 +54,10 @@ public class NorthSerializerImpl<OUTPUT> implements NorthSerializer<OUTPUT>
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T deserialize(final Type type, final OUTPUT serialized)
+    public <T> T deserialize(final Type type, final OUTPUT serialized, final DeserializationConfiguration<OUTPUT, ?> configuration)
     {
-        final DeserializationContext context = this.serializationFormat.createDeserializationContext(this.templateEngine, serialized);
-        final Template<?, SerializationContext, DeserializationContext> template = this.templateEngine.getTemplate(type);
+        final DeserializationContext context = configuration.createContext(this.templateEngine, serialized);
+        final var template = this.templateEngine.getTemplate(type);
 
         try
         {

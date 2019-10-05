@@ -1,4 +1,4 @@
-package pl.north93.serializer.platform.impl;
+package pl.north93.serializer.platform.template.impl;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import lombok.ToString;
 import pl.north93.serializer.platform.context.DeserializationContext;
 import pl.north93.serializer.platform.context.SerializationContext;
 import pl.north93.serializer.platform.template.Template;
-import pl.north93.serializer.platform.FieldInfo;
-import pl.north93.serializer.platform.InstanceCreator;
+import pl.north93.serializer.platform.template.field.FieldInfo;
+import pl.north93.serializer.platform.reflect.InstanceCreator;
 import pl.north93.serializer.platform.template.ITemplateElement;
 
 @ToString

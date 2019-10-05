@@ -5,12 +5,12 @@ import java.util.Map;
 
 import pl.north93.serializer.mongodb.MongoDbDeserializationContext;
 import pl.north93.serializer.mongodb.MongoDbSerializationContext;
-import pl.north93.serializer.platform.CustomFieldInfo;
-import pl.north93.serializer.platform.FieldInfo;
 import pl.north93.serializer.platform.context.DeserializationContext;
 import pl.north93.serializer.platform.context.SerializationContext;
 import pl.north93.serializer.platform.template.Template;
 import pl.north93.serializer.platform.template.TemplateEngine;
+import pl.north93.serializer.platform.template.field.CustomFieldInfo;
+import pl.north93.serializer.platform.template.field.FieldInfo;
 
 public class MongoDbMapTemplate implements Template<Map<String, Object>, MongoDbSerializationContext, MongoDbDeserializationContext>
 {

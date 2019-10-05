@@ -1,6 +1,6 @@
 package pl.north93.serializer.platform.template;
 
-import pl.north93.serializer.platform.FieldInfo;
+import pl.north93.serializer.platform.template.field.FieldInfo;
 
 /**
  * Reprezentuje jedną zmienną w templatce.

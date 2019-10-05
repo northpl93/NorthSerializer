@@ -1,24 +1,26 @@
 package pl.north93.serializer.mongodb.test;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.bson.BsonReader;
-import org.bson.json.JsonReader;
-import org.bson.json.JsonWriter;
-import org.junit.jupiter.api.Test;
-import pl.north93.serializer.mongodb.MongoDbCodec;
-import pl.north93.serializer.mongodb.MongoDbSerializationFormat;
-import pl.north93.serializer.platform.NorthSerializer;
-import pl.north93.serializer.platform.impl.NorthSerializerImpl;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import org.bson.BsonReader;
+import org.bson.json.JsonReader;
+import org.bson.json.JsonWriter;
+import org.junit.jupiter.api.Test;
+
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import pl.north93.serializer.mongodb.MongoDbSerializationConfiguration;
+import pl.north93.serializer.mongodb.MongoDbSerializationFormat;
+import pl.north93.serializer.platform.NorthSerializer;
+import pl.north93.serializer.platform.template.impl.NorthSerializerImpl;
 
 public class MongoDbListsTest
 {
@@ -36,8 +38,9 @@ public class MongoDbListsTest
     public void emptyArrayListTest()
     {
         final StringWriter stringWriter = new StringWriter();
-        MongoDbCodec.writer.set(new JsonWriter(stringWriter));
-        this.serializer.serialize(ArrayListHolder.class, new ArrayListHolder(new ArrayList<>()));
+        final MongoDbSerializationConfiguration configuration = new MongoDbSerializationConfiguration(new JsonWriter(stringWriter));
+
+        this.serializer.serialize(ArrayListHolder.class, new ArrayListHolder(new ArrayList<>()), configuration);
         System.out.println(stringWriter);
         final Object deserialized = this.serializer.deserialize(ArrayListHolder.class, new JsonReader(stringWriter.toString()));
 
@@ -53,8 +56,9 @@ public class MongoDbListsTest
         final ArrayList<String> strings = new ArrayList<>(Arrays.asList("test1", "test2", "test3"));
 
         final StringWriter stringWriter = new StringWriter();
-        MongoDbCodec.writer.set(new JsonWriter(stringWriter));
-        this.serializer.serialize(ArrayListHolder.class, new ArrayListHolder(strings));
+        final MongoDbSerializationConfiguration configuration = new MongoDbSerializationConfiguration(new JsonWriter(stringWriter));
+
+        this.serializer.serialize(ArrayListHolder.class, new ArrayListHolder(strings), configuration);
         System.out.println(stringWriter);
         final Object deserialized = this.serializer.deserialize(ArrayListHolder.class, new JsonReader(stringWriter.toString()));
 
@@ -70,8 +74,9 @@ public class MongoDbListsTest
         final ArrayList<Object> strings = new ArrayList<>(Arrays.asList(100, "test", true));
 
         final StringWriter stringWriter = new StringWriter();
-        MongoDbCodec.writer.set(new JsonWriter(stringWriter));
-        this.serializer.serialize(ArrayListHolder.class, new ArrayListHolder(strings));
+        final MongoDbSerializationConfiguration configuration = new MongoDbSerializationConfiguration(new JsonWriter(stringWriter));
+
+        this.serializer.serialize(ArrayListHolder.class, new ArrayListHolder(strings), configuration);
         System.out.println(stringWriter);
         final Object deserialized = this.serializer.deserialize(ArrayListHolder.class, new JsonReader(stringWriter.toString()));
 
@@ -88,8 +93,9 @@ public class MongoDbListsTest
         final ArrayList<ArrayList<String>> outerList = new ArrayList<>(Collections.singletonList(nestedList));
 
         final StringWriter stringWriter = new StringWriter();
-        MongoDbCodec.writer.set(new JsonWriter(stringWriter));
-        this.serializer.serialize(ArrayListHolder.class, new ArrayListHolder(outerList));
+        final MongoDbSerializationConfiguration configuration = new MongoDbSerializationConfiguration(new JsonWriter(stringWriter));
+
+        this.serializer.serialize(ArrayListHolder.class, new ArrayListHolder(outerList), configuration);
         System.out.println(stringWriter);
         final Object deserialized = this.serializer.deserialize(ArrayListHolder.class, new JsonReader(stringWriter.toString()));
 

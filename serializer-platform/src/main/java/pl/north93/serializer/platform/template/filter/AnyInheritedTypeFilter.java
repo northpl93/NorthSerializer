@@ -1,8 +1,10 @@
-package pl.north93.serializer.platform.template;
+package pl.north93.serializer.platform.template.filter;
 
 import java.lang.reflect.Type;
 
 import lombok.ToString;
+import pl.north93.serializer.platform.template.TemplateEngine;
+import pl.north93.serializer.platform.template.TemplatePriority;
 
 @ToString
 public final class AnyInheritedTypeFilter implements TemplateFilter

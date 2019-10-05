@@ -1,19 +1,21 @@
 package pl.north93.serializer.msgpack;
 
 import org.msgpack.core.MessageBufferPacker;
-import org.msgpack.core.MessagePack;
 
-import pl.north93.serializer.platform.FieldInfo;
+import lombok.ToString;
 import pl.north93.serializer.platform.context.SerializationContext;
 import pl.north93.serializer.platform.template.TemplateEngine;
+import pl.north93.serializer.platform.template.field.FieldInfo;
 
+@ToString
 public class MsgPackSerializationContext extends SerializationContext
 {
-    private final MessageBufferPacker packer = MessagePack.newDefaultBufferPacker();
+    private final MessageBufferPacker packer;
 
-    public MsgPackSerializationContext(final TemplateEngine templateEngine)
+    public MsgPackSerializationContext(final TemplateEngine templateEngine, final MessageBufferPacker packer)
     {
         super(templateEngine);
+        this.packer = packer;
     }
 
     public MessageBufferPacker getPacker()

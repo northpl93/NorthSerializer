@@ -1,20 +1,22 @@
 package pl.north93.serializer.mongodb.test;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
+
+import java.io.StringWriter;
+
 import org.bson.BsonReader;
 import org.bson.json.JsonReader;
 import org.bson.json.JsonWriter;
 import org.junit.jupiter.api.Test;
-import pl.north93.serializer.mongodb.MongoDbCodec;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import pl.north93.serializer.mongodb.MongoDbSerializationConfiguration;
 import pl.north93.serializer.mongodb.MongoDbSerializationFormat;
 import pl.north93.serializer.platform.NorthSerializer;
-import pl.north93.serializer.platform.impl.NorthSerializerImpl;
-
-import java.io.StringWriter;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import pl.north93.serializer.platform.template.impl.NorthSerializerImpl;
 
 public class MongoDbSimpleObjectsTest
 {
@@ -35,8 +37,9 @@ public class MongoDbSimpleObjectsTest
         final SimpleObject beforeSerialization = new SimpleObject("testString", 10, 5.0D);
 
         final StringWriter stringWriter = new StringWriter();
-        MongoDbCodec.writer.set(new JsonWriter(stringWriter));
-        this.serializer.serialize(SimpleObject.class, beforeSerialization);
+        final MongoDbSerializationConfiguration configuration = new MongoDbSerializationConfiguration(new JsonWriter(stringWriter));
+
+        this.serializer.serialize(SimpleObject.class, beforeSerialization, configuration);
         System.out.println(stringWriter);
         final Object deserialized = this.serializer.deserialize(SimpleObject.class, new JsonReader(stringWriter.toString()));
 
@@ -50,8 +53,9 @@ public class MongoDbSimpleObjectsTest
         final SimpleObject beforeSerialization = new SimpleObject("testString", 10, 5.0D);
 
         final StringWriter stringWriter = new StringWriter();
-        MongoDbCodec.writer.set(new JsonWriter(stringWriter));
-        this.serializer.serialize(Object.class, beforeSerialization);
+        final MongoDbSerializationConfiguration configuration = new MongoDbSerializationConfiguration(new JsonWriter(stringWriter));
+
+        this.serializer.serialize(Object.class, beforeSerialization, configuration);
         System.out.println(stringWriter);
         final Object deserialized = this.serializer.deserialize(Object.class, new JsonReader(stringWriter.toString()));
 

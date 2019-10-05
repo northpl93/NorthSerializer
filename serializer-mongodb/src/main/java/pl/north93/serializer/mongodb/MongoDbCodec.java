@@ -10,7 +10,6 @@ import pl.north93.serializer.platform.NorthSerializer;
 
 public class MongoDbCodec<T> implements Codec<T>
 {
-    public static final ThreadLocal<BsonWriter> writer = new ThreadLocal<>();
     private final NorthSerializer<BsonReader> serializer;
     private final Class<T> type;
 
@@ -29,15 +28,7 @@ public class MongoDbCodec<T> implements Codec<T>
     @Override
     public void encode(final BsonWriter bsonWriter, final Object o, final EncoderContext encoderContext)
     {
-        try
-        {
-            writer.set(bsonWriter);
-            this.serializer.serialize(this.type, o);
-        }
-        finally
-        {
-            writer.remove();
-        }
+        this.serializer.serialize(this.type, o);
     }
 
     @Override

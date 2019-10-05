@@ -8,10 +8,10 @@ import java.util.regex.Pattern;
 import org.bson.BsonType;
 import org.bson.types.ObjectId;
 
-import pl.north93.serializer.platform.TypePredictor;
-import pl.north93.serializer.platform.FieldInfo;
+import pl.north93.serializer.platform.format.TypePredictor;
 import pl.north93.serializer.platform.template.Template;
 import pl.north93.serializer.platform.template.TemplateEngine;
+import pl.north93.serializer.platform.template.field.FieldInfo;
 
 public class MongoDbTypePredictor implements TypePredictor<MongoDbSerializationContext, MongoDbDeserializationContext>
 {

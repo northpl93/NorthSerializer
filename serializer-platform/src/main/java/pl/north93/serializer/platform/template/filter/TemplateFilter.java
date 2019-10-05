@@ -1,4 +1,6 @@
-package pl.north93.serializer.platform.template;
+package pl.north93.serializer.platform.template.filter;
+
+import pl.north93.serializer.platform.template.TemplateEngine;
 
 import javax.annotation.Nonnull;
 

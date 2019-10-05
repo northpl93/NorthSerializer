@@ -3,9 +3,9 @@ package pl.north93.serializer.mongodb;
 import org.bson.BsonWriter;
 
 import lombok.ToString;
-import pl.north93.serializer.platform.FieldInfo;
 import pl.north93.serializer.platform.context.SerializationContext;
 import pl.north93.serializer.platform.template.TemplateEngine;
+import pl.north93.serializer.platform.template.field.FieldInfo;
 
 @ToString
 public class MongoDbSerializationContext extends SerializationContext
