@@ -8,14 +8,14 @@ import org.msgpack.core.MessageUnpacker;
 
 import pl.north93.serializer.msgpack.MsgPackDeserializationContext;
 import pl.north93.serializer.msgpack.MsgPackSerializationContext;
-import pl.north93.serializer.platform.template.field.CustomFieldInfo;
-import pl.north93.serializer.platform.template.field.FieldInfo;
 import pl.north93.serializer.platform.context.DeserializationContext;
 import pl.north93.serializer.platform.context.SerializationContext;
 import pl.north93.serializer.platform.template.Template;
 import pl.north93.serializer.platform.template.TemplateEngine;
-import pl.north93.serializer.platform.template.filter.TemplateFilter;
 import pl.north93.serializer.platform.template.TemplatePriority;
+import pl.north93.serializer.platform.template.field.CustomFieldInfo;
+import pl.north93.serializer.platform.template.field.FieldInfo;
+import pl.north93.serializer.platform.template.filter.TemplateFilter;
 
 public class MsgPackArrayTemplate implements Template<Object, MsgPackSerializationContext, MsgPackDeserializationContext>
 {

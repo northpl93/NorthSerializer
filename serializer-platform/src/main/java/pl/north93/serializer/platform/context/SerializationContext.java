@@ -14,6 +14,7 @@ public abstract class SerializationContext extends Context
      * Zamyka proces serializowania i zwraca wynik pracy serializera.
      *
      * @return Wynik pracy serializera.
+     *
      * @throws Exception W wypadku wystapienia problemów podczas operacji.
      */
     public abstract Object finalizeAndGetResult() throws Exception;

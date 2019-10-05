@@ -1,10 +1,10 @@
 package pl.north93.serializer.platform.template.filter;
 
-import pl.north93.serializer.platform.template.TemplateEngine;
-
 import javax.annotation.Nonnull;
 
 import java.lang.reflect.Type;
+
+import pl.north93.serializer.platform.template.TemplateEngine;
 
 public interface TemplateFilter extends Comparable<TemplateFilter>
 {
@@ -18,7 +18,7 @@ public interface TemplateFilter extends Comparable<TemplateFilter>
         final int result = other.getPriority() - this.getPriority();
         if (result == 0)
         {
-            return -1;
+            return - 1;
         }
 
         return result;

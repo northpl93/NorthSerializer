@@ -10,7 +10,7 @@ import pl.north93.serializer.platform.template.TemplatePriority;
 public final class ExactTypeIgnoreGenericFilter implements TemplateFilter
 {
     private final Class<?> clazz;
-    private final int      priority;
+    private final int priority;
 
     public ExactTypeIgnoreGenericFilter(final Class<?> clazz, final int priority)
     {

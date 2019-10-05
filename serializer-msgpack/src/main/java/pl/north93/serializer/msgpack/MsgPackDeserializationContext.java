@@ -3,9 +3,9 @@ package pl.north93.serializer.msgpack;
 import org.msgpack.core.MessagePack;
 import org.msgpack.core.MessageUnpacker;
 
-import pl.north93.serializer.platform.template.field.FieldInfo;
 import pl.north93.serializer.platform.context.DeserializationContext;
 import pl.north93.serializer.platform.template.TemplateEngine;
+import pl.north93.serializer.platform.template.field.FieldInfo;
 
 public class MsgPackDeserializationContext extends DeserializationContext
 {

@@ -2,15 +2,15 @@ package pl.north93.serializer.platform.template.builtin;
 
 import java.time.Duration;
 
-import pl.north93.serializer.platform.template.field.FieldInfo;
 import pl.north93.serializer.platform.context.DeserializationContext;
 import pl.north93.serializer.platform.context.SerializationContext;
 import pl.north93.serializer.platform.template.Template;
 import pl.north93.serializer.platform.template.field.CustomFieldInfo;
+import pl.north93.serializer.platform.template.field.FieldInfo;
 
 public class DurationTemplate implements Template<Duration, SerializationContext, DeserializationContext>
 {
-    private static final FieldInfo FIELD_SECONDS         = new CustomFieldInfo("seconds", Long.class);
+    private static final FieldInfo FIELD_SECONDS = new CustomFieldInfo("seconds", Long.class);
     private static final FieldInfo FIELD_NANO_ADJUSTMENT = new CustomFieldInfo("nanoAdjustment", Integer.class);
 
     @Override

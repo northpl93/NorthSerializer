@@ -8,6 +8,7 @@ public interface ReflectionEngine
      * Szuka klasy o podanej nazwie.
      *
      * @param name Nazwa klasy.
+     *
      * @return Klasa o podanej nazwie.
      */
     Class<?> findClass(String name);
@@ -17,6 +18,7 @@ public interface ReflectionEngine
      * Spowoduje to ewentualną ukratę typu generycznego.
      *
      * @param type Type do skonwertowania na Class.
+     *
      * @return Class pobrane z danego Type.
      */
     Class<?> getRawClassFromType(Type type);

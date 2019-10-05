@@ -2,14 +2,14 @@ package pl.north93.serializer.platform.template.builtin;
 
 import java.lang.reflect.Type;
 
-import pl.north93.serializer.platform.template.field.CustomFieldInfo;
-import pl.north93.serializer.platform.template.field.FieldInfo;
 import pl.north93.serializer.platform.context.DeserializationContext;
 import pl.north93.serializer.platform.context.SerializationContext;
 import pl.north93.serializer.platform.template.Template;
 import pl.north93.serializer.platform.template.TemplateEngine;
-import pl.north93.serializer.platform.template.filter.TemplateFilter;
 import pl.north93.serializer.platform.template.TemplatePriority;
+import pl.north93.serializer.platform.template.field.CustomFieldInfo;
+import pl.north93.serializer.platform.template.field.FieldInfo;
+import pl.north93.serializer.platform.template.filter.TemplateFilter;
 
 public class DynamicTemplate implements Template<Object, SerializationContext, DeserializationContext>
 {

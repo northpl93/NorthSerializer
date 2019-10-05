@@ -2,15 +2,15 @@ package pl.north93.serializer.platform.template.builtin;
 
 import java.time.Instant;
 
-import pl.north93.serializer.platform.template.field.FieldInfo;
 import pl.north93.serializer.platform.context.DeserializationContext;
 import pl.north93.serializer.platform.context.SerializationContext;
 import pl.north93.serializer.platform.template.Template;
 import pl.north93.serializer.platform.template.field.CustomFieldInfo;
+import pl.north93.serializer.platform.template.field.FieldInfo;
 
 public class InstantTemplate implements Template<Instant, SerializationContext, DeserializationContext>
 {
-    private static final FieldInfo FIELD_EPOCH_SECOND    = new CustomFieldInfo("epochSecond", Long.class);
+    private static final FieldInfo FIELD_EPOCH_SECOND = new CustomFieldInfo("epochSecond", Long.class);
     private static final FieldInfo FIELD_NANO_ADJUSTMENT = new CustomFieldInfo("nanoAdjustment", Integer.class);
 
     @Override

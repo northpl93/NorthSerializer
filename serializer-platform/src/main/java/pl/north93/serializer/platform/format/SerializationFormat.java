@@ -2,9 +2,9 @@ package pl.north93.serializer.platform.format;
 
 import javax.annotation.Nullable;
 
+import pl.north93.serializer.platform.context.DeserializationContext;
 import pl.north93.serializer.platform.context.SerializationContext;
 import pl.north93.serializer.platform.template.TemplateEngine;
-import pl.north93.serializer.platform.context.DeserializationContext;
 
 public interface SerializationFormat<OUTPUT, S extends SerializationContext, D extends DeserializationContext>
 {

@@ -3,11 +3,11 @@ package pl.north93.serializer.platform.template.impl;
 import java.lang.reflect.Type;
 
 import pl.north93.serializer.platform.NorthSerializer;
+import pl.north93.serializer.platform.context.DeserializationContext;
+import pl.north93.serializer.platform.context.SerializationContext;
 import pl.north93.serializer.platform.format.DeserializationConfiguration;
 import pl.north93.serializer.platform.format.SerializationConfiguration;
 import pl.north93.serializer.platform.format.SerializationFormat;
-import pl.north93.serializer.platform.context.DeserializationContext;
-import pl.north93.serializer.platform.context.SerializationContext;
 import pl.north93.serializer.platform.reflect.ClassResolver;
 import pl.north93.serializer.platform.reflect.impl.DefaultClassResolver;
 import pl.north93.serializer.platform.reflect.impl.ReflectionEngineImpl;

@@ -12,10 +12,10 @@ import pl.north93.serializer.platform.reflect.InstanceCreator;
 
 /*default*/ class MethodHandleConstructorCreator<T> implements InstanceCreator<T>
 {
-    private static final Lookup       LOOKUP      = MethodHandles.lookup();
-    private static final MethodType   VOID_TYPE   = MethodType.methodType(void.class);
-    private static final MethodType   OBJECT_TYPE = MethodType.methodType(Object.class);
-    private final        MethodHandle constructor;
+    private static final Lookup LOOKUP = MethodHandles.lookup();
+    private static final MethodType VOID_TYPE = MethodType.methodType(void.class);
+    private static final MethodType OBJECT_TYPE = MethodType.methodType(Object.class);
+    private final MethodHandle constructor;
 
     public MethodHandleConstructorCreator(final Class<T> clazz)
     {

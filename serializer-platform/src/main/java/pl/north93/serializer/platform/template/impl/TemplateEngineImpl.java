@@ -13,9 +13,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import pl.north93.serializer.platform.format.TypePredictor;
 import pl.north93.serializer.platform.context.DeserializationContext;
 import pl.north93.serializer.platform.context.SerializationContext;
+import pl.north93.serializer.platform.format.TypePredictor;
 import pl.north93.serializer.platform.reflect.InstanceCreator;
 import pl.north93.serializer.platform.reflect.ReflectionEngine;
 import pl.north93.serializer.platform.template.Template;

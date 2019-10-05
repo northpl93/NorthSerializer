@@ -16,7 +16,11 @@ public class MsgPackEnumsTest
 
     public enum TestEnum
     {
-        TEST_1, TEST_2, TEST_3, TEST_4, TEST_5
+        TEST_1,
+        TEST_2,
+        TEST_3,
+        TEST_4,
+        TEST_5
     }
 
     public enum TestExtendedEnum

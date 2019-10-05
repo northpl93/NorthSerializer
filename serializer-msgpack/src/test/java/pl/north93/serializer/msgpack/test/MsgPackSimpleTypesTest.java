@@ -1,12 +1,14 @@
 package pl.north93.serializer.msgpack.test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
+
 import org.junit.jupiter.api.Test;
+
 import pl.north93.serializer.msgpack.MsgPackSerializationFormat;
 import pl.north93.serializer.platform.NorthSerializer;
 import pl.north93.serializer.platform.template.impl.NorthSerializerImpl;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
 
 // serializacja prostych wartosci
 public class MsgPackSimpleTypesTest

@@ -29,7 +29,7 @@ public class MsgPackArraysTest
     @Test
     public void directArrayOfStringSerialization()
     {
-        final String[] beforeSerialization = new String[] {"test1", "test2"};
+        final String[] beforeSerialization = new String[]{"test1", "test2"};
 
         final byte[] bytes = this.serializer.serialize(String[].class, beforeSerialization);
         final Object deserialized = this.serializer.deserialize(String[].class, bytes);

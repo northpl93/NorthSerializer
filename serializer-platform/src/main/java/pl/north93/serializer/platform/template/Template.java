@@ -1,8 +1,8 @@
 package pl.north93.serializer.platform.template;
 
-import pl.north93.serializer.platform.template.field.FieldInfo;
 import pl.north93.serializer.platform.context.DeserializationContext;
 import pl.north93.serializer.platform.context.SerializationContext;
+import pl.north93.serializer.platform.template.field.FieldInfo;
 
 public interface Template<T, S extends SerializationContext, D extends DeserializationContext>
 {

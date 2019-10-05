@@ -5,16 +5,16 @@ import java.util.List;
 import lombok.ToString;
 import pl.north93.serializer.platform.context.DeserializationContext;
 import pl.north93.serializer.platform.context.SerializationContext;
-import pl.north93.serializer.platform.template.Template;
-import pl.north93.serializer.platform.template.field.FieldInfo;
 import pl.north93.serializer.platform.reflect.InstanceCreator;
 import pl.north93.serializer.platform.template.ITemplateElement;
+import pl.north93.serializer.platform.template.Template;
+import pl.north93.serializer.platform.template.field.FieldInfo;
 
 @ToString
 @SuppressWarnings("unchecked")
 /*default*/ class TemplateImpl<T> implements Template<T, SerializationContext, DeserializationContext>
 {
-    private final InstanceCreator<T>     instanceCreator;
+    private final InstanceCreator<T> instanceCreator;
     private final List<ITemplateElement> structure;
 
     public TemplateImpl(final InstanceCreator<T> instanceCreator, final List<ITemplateElement> structure)

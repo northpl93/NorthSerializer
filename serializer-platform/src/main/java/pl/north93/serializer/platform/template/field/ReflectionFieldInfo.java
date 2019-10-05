@@ -11,7 +11,7 @@ import pl.north93.serializer.platform.annotations.NorthField;
 public final class ReflectionFieldInfo implements FieldInfo
 {
     private final String name;
-    private final Type   type;
+    private final Type type;
 
     public ReflectionFieldInfo(final Field field)
     {
