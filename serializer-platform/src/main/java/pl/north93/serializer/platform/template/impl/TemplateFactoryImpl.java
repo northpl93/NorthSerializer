@@ -62,7 +62,7 @@ import pl.north93.serializer.platform.template.field.ReflectionFieldInfo;
                 continue;
             }
 
-            final Template<Object, SerializationContext, DeserializationContext> template = templateEngine.getTemplate(fieldInfo.getType());
+            final var template = templateEngine.getTemplate(fieldInfo.getType());
             elements.add(this.templateElementFactory.getTemplateElement(field, fieldInfo, template));
         }
 

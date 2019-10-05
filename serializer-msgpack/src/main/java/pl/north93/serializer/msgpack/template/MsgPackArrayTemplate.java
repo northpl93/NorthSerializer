@@ -8,8 +8,6 @@ import org.msgpack.core.MessageUnpacker;
 
 import pl.north93.serializer.msgpack.MsgPackDeserializationContext;
 import pl.north93.serializer.msgpack.MsgPackSerializationContext;
-import pl.north93.serializer.platform.context.DeserializationContext;
-import pl.north93.serializer.platform.context.SerializationContext;
 import pl.north93.serializer.platform.template.Template;
 import pl.north93.serializer.platform.template.TemplateEngine;
 import pl.north93.serializer.platform.template.TemplatePriority;
@@ -41,7 +39,7 @@ public class MsgPackArrayTemplate implements Template<Object, MsgPackSerializati
         final MessageBufferPacker packer = context.getPacker();
 
         final Type elementType = this.getArrayElementType(context.getTemplateEngine(), field.getType());
-        final Template<Object, SerializationContext, DeserializationContext> template = context.getTemplateEngine().getTemplate(elementType);
+        final var template = context.getTemplateEngine().getTemplate(elementType);
 
         final int length = Array.getLength(object);
         packer.packArrayHeader(length);
@@ -58,7 +56,7 @@ public class MsgPackArrayTemplate implements Template<Object, MsgPackSerializati
         final MessageUnpacker unPacker = context.getUnPacker();
 
         final Class<?> elementType = this.getArrayElementType(context.getTemplateEngine(), field.getType());
-        final Template<Object, SerializationContext, DeserializationContext> template = context.getTemplateEngine().getTemplate(elementType);
+        final var template = context.getTemplateEngine().getTemplate(elementType);
 
         final int arraySize = unPacker.unpackArrayHeader();
 

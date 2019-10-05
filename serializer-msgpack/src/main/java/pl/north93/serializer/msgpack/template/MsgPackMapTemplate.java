@@ -30,8 +30,8 @@ public class MsgPackMapTemplate implements Template<Map<Object, Object>, MsgPack
 
         final Pair<Type, Type> mapTypes = this.getMapTypes(templateEngine, field);
 
-        final Template<Object, SerializationContext, DeserializationContext> keyTemplate = templateEngine.getTemplate(mapTypes.getKey());
-        final Template<Object, SerializationContext, DeserializationContext> valueTemplate = templateEngine.getTemplate(mapTypes.getValue());
+        final var keyTemplate = templateEngine.getTemplate(mapTypes.getKey());
+        final var valueTemplate = templateEngine.getTemplate(mapTypes.getValue());
 
         for (final Map.Entry<Object, Object> entry : entries)
         {
@@ -54,8 +54,8 @@ public class MsgPackMapTemplate implements Template<Map<Object, Object>, MsgPack
 
         final Pair<Type, Type> mapTypes = this.getMapTypes(templateEngine, field);
 
-        final Template<Object, SerializationContext, DeserializationContext> keyTemplate = templateEngine.getTemplate(mapTypes.getKey());
-        final Template<Object, SerializationContext, DeserializationContext> valueTemplate = templateEngine.getTemplate(mapTypes.getValue());
+        final var keyTemplate = templateEngine.getTemplate(mapTypes.getKey());
+        final var valueTemplate = templateEngine.getTemplate(mapTypes.getValue());
 
         for (int i = 0; i < mapSize; i++)
         {

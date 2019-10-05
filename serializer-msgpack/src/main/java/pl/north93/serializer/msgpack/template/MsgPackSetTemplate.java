@@ -23,7 +23,7 @@ public class MsgPackSetTemplate implements Template<Set<Object>, MsgPackSerializ
         final MessageBufferPacker packer = context.getPacker();
 
         final Type genericType = this.getGenericType(context.getTemplateEngine(), field.getType());
-        final Template<Object, SerializationContext, DeserializationContext> objectSerializer = context.getTemplateEngine().getTemplate(genericType);
+        final var objectSerializer = context.getTemplateEngine().getTemplate(genericType);
 
         final FieldInfo listFieldInfo = this.createListFieldInfo(genericType);
 
@@ -40,7 +40,7 @@ public class MsgPackSetTemplate implements Template<Set<Object>, MsgPackSerializ
         final MessageUnpacker unPacker = context.getUnPacker();
 
         final Type genericType = this.getGenericType(context.getTemplateEngine(), field.getType());
-        final Template<Object, SerializationContext, DeserializationContext> objectSerializer = context.getTemplateEngine().getTemplate(genericType);
+        final var objectSerializer = context.getTemplateEngine().getTemplate(genericType);
 
         final FieldInfo listFieldInfo = this.createListFieldInfo(genericType);
         final Set<Object> objects = this.instantiateSet(context.getTemplateEngine(), field.getType());

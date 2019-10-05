@@ -8,8 +8,6 @@ import org.msgpack.core.MessageUnpacker;
 
 import pl.north93.serializer.msgpack.MsgPackDeserializationContext;
 import pl.north93.serializer.msgpack.MsgPackSerializationContext;
-import pl.north93.serializer.platform.context.DeserializationContext;
-import pl.north93.serializer.platform.context.SerializationContext;
 import pl.north93.serializer.platform.template.Template;
 import pl.north93.serializer.platform.template.TemplateEngine;
 import pl.north93.serializer.platform.template.field.CustomFieldInfo;
@@ -23,7 +21,7 @@ public class MsgPackListTemplate implements Template<List<Object>, MsgPackSerial
         final MessageBufferPacker packer = context.getPacker();
 
         final Type genericType = this.getGenericType(context.getTemplateEngine(), field.getType());
-        final Template<Object, SerializationContext, DeserializationContext> objectSerializer = context.getTemplateEngine().getTemplate(genericType);
+        final var objectSerializer = context.getTemplateEngine().getTemplate(genericType);
 
         final FieldInfo listFieldInfo = this.createListFieldInfo(genericType);
 
@@ -40,7 +38,7 @@ public class MsgPackListTemplate implements Template<List<Object>, MsgPackSerial
         final MessageUnpacker unPacker = context.getUnPacker();
 
         final Type genericType = this.getGenericType(context.getTemplateEngine(), field.getType());
-        final Template<Object, SerializationContext, DeserializationContext> objectSerializer = context.getTemplateEngine().getTemplate(genericType);
+        final var objectSerializer = context.getTemplateEngine().getTemplate(genericType);
 
         final FieldInfo listFieldInfo = this.createListFieldInfo(genericType);
         final List<Object> objects = this.instantiateList(context.getTemplateEngine(), field.getType());

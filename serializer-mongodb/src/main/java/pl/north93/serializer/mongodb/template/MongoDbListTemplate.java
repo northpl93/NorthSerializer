@@ -5,8 +5,6 @@ import java.util.List;
 
 import pl.north93.serializer.mongodb.MongoDbDeserializationContext;
 import pl.north93.serializer.mongodb.MongoDbSerializationContext;
-import pl.north93.serializer.platform.context.DeserializationContext;
-import pl.north93.serializer.platform.context.SerializationContext;
 import pl.north93.serializer.platform.template.Template;
 import pl.north93.serializer.platform.template.TemplateEngine;
 import pl.north93.serializer.platform.template.field.CustomFieldInfo;
@@ -18,7 +16,7 @@ public class MongoDbListTemplate implements Template<List<Object>, MongoDbSerial
     public void serialise(final MongoDbSerializationContext context, final FieldInfo field, final List object) throws Exception
     {
         final Type genericType = this.getGenericType(context.getTemplateEngine(), field.getType());
-        final Template<Object, SerializationContext, DeserializationContext> objectSerializer = context.getTemplateEngine().getTemplate(genericType);
+        final var objectSerializer = context.getTemplateEngine().getTemplate(genericType);
 
         final FieldInfo listFieldInfo = this.createListFieldInfo(genericType);
 
@@ -34,7 +32,7 @@ public class MongoDbListTemplate implements Template<List<Object>, MongoDbSerial
     public List<Object> deserialize(final MongoDbDeserializationContext context, final FieldInfo field) throws Exception
     {
         final Type genericType = this.getGenericType(context.getTemplateEngine(), field.getType());
-        final Template<Object, SerializationContext, DeserializationContext> objectSerializer = context.getTemplateEngine().getTemplate(genericType);
+        final var objectSerializer = context.getTemplateEngine().getTemplate(genericType);
 
         final FieldInfo listFieldInfo = this.createListFieldInfo(genericType);
 

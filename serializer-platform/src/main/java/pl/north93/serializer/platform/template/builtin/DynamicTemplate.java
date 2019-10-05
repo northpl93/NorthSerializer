@@ -50,7 +50,7 @@ public class DynamicTemplate implements Template<Object, SerializationContext, D
     private void serializeWithTypePredicting(final SerializationContext context, final FieldInfo field, final Type fixedType, final Object object) throws Exception
     {
         final TemplateEngine templateEngine = context.getTemplateEngine();
-        final Template<Object, SerializationContext, DeserializationContext> template = templateEngine.getTemplate(fixedType);
+        final var template = templateEngine.getTemplate(fixedType);
 
         template.serialise(context, field, object);
     }
@@ -63,7 +63,7 @@ public class DynamicTemplate implements Template<Object, SerializationContext, D
         context.enterObject(field);
         try
         {
-            final Template<Object, SerializationContext, DeserializationContext> template = templateEngine.getTemplate(fixedType);
+            final var template = templateEngine.getTemplate(fixedType);
 
             context.writeString(FIELD_TYPE, object.getClass().getName());
             template.serialise(context, this.getValueField(fixedType), object);
@@ -80,10 +80,10 @@ public class DynamicTemplate implements Template<Object, SerializationContext, D
         final TemplateEngine templateEngine = context.getTemplateEngine();
         if (templateEngine.isTypePredictingSupported())
         {
-            final Template<Object, SerializationContext, DeserializationContext> predictedType = templateEngine.getTypePredictor().predictType(context, field);
-            if (predictedType != null)
+            final var predictedTemplate = templateEngine.getTypePredictor().predictType(context, field);
+            if (predictedTemplate != null)
             {
-                return predictedType.deserialize(context, field);
+                return predictedTemplate.deserialize(context, field);
             }
         }
 
@@ -100,7 +100,7 @@ public class DynamicTemplate implements Template<Object, SerializationContext, D
 
             final Type fixedType = this.addMissingGenericType(templateEngine, field.getType(), templateClass);
 
-            final Template<Object, SerializationContext, DeserializationContext> template = templateEngine.getTemplate(fixedType);
+            final var template = templateEngine.getTemplate(fixedType);
             return template.deserialize(context, this.getValueField(fixedType));
         }
         finally

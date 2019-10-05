@@ -5,8 +5,6 @@ import java.util.Map;
 
 import pl.north93.serializer.mongodb.MongoDbDeserializationContext;
 import pl.north93.serializer.mongodb.MongoDbSerializationContext;
-import pl.north93.serializer.platform.context.DeserializationContext;
-import pl.north93.serializer.platform.context.SerializationContext;
 import pl.north93.serializer.platform.template.Template;
 import pl.north93.serializer.platform.template.TemplateEngine;
 import pl.north93.serializer.platform.template.field.CustomFieldInfo;
@@ -21,7 +19,7 @@ public class MongoDbMapTemplate implements Template<Map<String, Object>, MongoDb
         context.enterObject(field);
 
         final Type genericType = this.getValueGenericType(context.getTemplateEngine(), field.getType());
-        final Template<Object, SerializationContext, DeserializationContext> valueSerializer = context.getTemplateEngine().getTemplate(genericType);
+        final var valueSerializer = context.getTemplateEngine().getTemplate(genericType);
 
         for (final Map.Entry<Object, Object> entry : ((Map<Object, Object>) object).entrySet())
         {
@@ -42,7 +40,7 @@ public class MongoDbMapTemplate implements Template<Map<String, Object>, MongoDb
             context.enterObject(field); // wchodzimy do obiektu mapy
 
             final Type genericType = this.getValueGenericType(context.getTemplateEngine(), field.getType());
-            final Template<Object, SerializationContext, DeserializationContext> valueSerializer = context.getTemplateEngine().getTemplate(genericType);
+            final var valueSerializer = context.getTemplateEngine().getTemplate(genericType);
 
             final Map<String, Object> map = this.instantiateMap(context.getTemplateEngine(), field.getType());
             for (final String name : context.getKeys()) // zwraca liste kluczy w danym obiekcie, czyli naszej mapie
