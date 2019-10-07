@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import java.io.StringWriter;
 
 import org.bson.BsonReader;
+import org.bson.BsonWriter;
 import org.bson.json.JsonReader;
 import org.bson.json.JsonWriter;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ import pl.north93.serializer.platform.template.impl.NorthSerializerImpl;
 
 public class MongoDbSimpleObjectsTest
 {
-    private final NorthSerializer<BsonReader> serializer = new NorthSerializerImpl<>(new MongoDbSerializationFormat());
+    private final NorthSerializer<BsonWriter, BsonReader> serializer = new NorthSerializerImpl<>(new MongoDbSerializationFormat());
 
     @Data
     @AllArgsConstructor
@@ -39,7 +40,9 @@ public class MongoDbSimpleObjectsTest
         final StringWriter stringWriter = new StringWriter();
         final MongoDbSerializationConfiguration configuration = new MongoDbSerializationConfiguration(new JsonWriter(stringWriter));
 
-        this.serializer.serialize(SimpleObject.class, beforeSerialization, configuration);
+        final BsonWriter bsonWriter = this.serializer.serialize(SimpleObject.class, beforeSerialization, configuration);
+        assertSame(JsonWriter.class, bsonWriter.getClass());
+
         System.out.println(stringWriter);
         final Object deserialized = this.serializer.deserialize(SimpleObject.class, new JsonReader(stringWriter.toString()));
 
@@ -55,7 +58,9 @@ public class MongoDbSimpleObjectsTest
         final StringWriter stringWriter = new StringWriter();
         final MongoDbSerializationConfiguration configuration = new MongoDbSerializationConfiguration(new JsonWriter(stringWriter));
 
-        this.serializer.serialize(Object.class, beforeSerialization, configuration);
+        final BsonWriter bsonWriter = this.serializer.serialize(Object.class, beforeSerialization, configuration);
+        assertSame(JsonWriter.class, bsonWriter.getClass());
+
         System.out.println(stringWriter);
         final Object deserialized = this.serializer.deserialize(Object.class, new JsonReader(stringWriter.toString()));
 

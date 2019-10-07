@@ -12,7 +12,7 @@ import pl.north93.serializer.platform.template.impl.NorthSerializerImpl;
 
 public class MsgPackEnumsTest
 {
-    private final NorthSerializer<byte[]> serializer = new NorthSerializerImpl<>(new MsgPackSerializationFormat());
+    private final NorthSerializer<byte[], byte[]> serializer = new NorthSerializerImpl<>(new MsgPackSerializationFormat());
 
     public enum TestEnum
     {

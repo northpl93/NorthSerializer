@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import org.bson.BsonBinaryWriter;
 import org.bson.BsonReader;
+import org.bson.BsonWriter;
 import org.bson.Document;
 import org.bson.io.BasicOutputBuffer;
 import org.bson.types.ObjectId;
@@ -28,7 +29,7 @@ import pl.north93.serializer.platform.template.TemplatePriority;
 import pl.north93.serializer.platform.template.filter.AnyInheritedTypeFilter;
 import pl.north93.serializer.platform.template.filter.ExactTypeIgnoreGenericFilter;
 
-public class MongoDbSerializationFormat implements SerializationFormat<BsonReader, MongoDbSerializationContext, MongoDbDeserializationContext>
+public class MongoDbSerializationFormat implements SerializationFormat<BsonWriter, BsonReader, MongoDbSerializationContext, MongoDbDeserializationContext>
 {
     @Override
     public void configure(final TemplateEngine templateEngine)

@@ -10,10 +10,10 @@ import pl.north93.serializer.platform.NorthSerializer;
 
 public class MongoDbCodec<T> implements Codec<T>
 {
-    private final NorthSerializer<BsonReader> serializer;
+    private final NorthSerializer<BsonWriter, BsonReader> serializer;
     private final Class<T> type;
 
-    public MongoDbCodec(final NorthSerializer<BsonReader> serializer, final Class<T> type)
+    public MongoDbCodec(final NorthSerializer<BsonWriter, BsonReader> serializer, final Class<T> type)
     {
         this.serializer = serializer;
         this.type = type;

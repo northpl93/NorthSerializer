@@ -8,7 +8,7 @@ import lombok.ToString;
 
 @ToString
 @AllArgsConstructor
-public class NorthParameterizedType implements ParameterizedType
+/*default*/ class NorthParameterizedType implements ParameterizedType
 {
     private final Class<?> clazz;
     private final Type[] parameters;

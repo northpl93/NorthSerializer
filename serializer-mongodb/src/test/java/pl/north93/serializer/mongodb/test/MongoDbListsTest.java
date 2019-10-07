@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import org.bson.BsonReader;
+import org.bson.BsonWriter;
 import org.bson.json.JsonReader;
 import org.bson.json.JsonWriter;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,7 @@ import pl.north93.serializer.platform.template.impl.NorthSerializerImpl;
 
 public class MongoDbListsTest
 {
-    private final NorthSerializer<BsonReader> serializer = new NorthSerializerImpl<>(new MongoDbSerializationFormat());
+    private final NorthSerializer<BsonWriter, BsonReader> serializer = new NorthSerializerImpl<>(new MongoDbSerializationFormat());
 
     @ToString
     @NoArgsConstructor

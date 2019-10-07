@@ -20,7 +20,7 @@ import pl.north93.serializer.platform.template.TemplateEngine;
 import pl.north93.serializer.platform.template.filter.AnyInheritedTypeFilter;
 import pl.north93.serializer.platform.template.filter.ExactTypeIgnoreGenericFilter;
 
-public class MsgPackSerializationFormat implements SerializationFormat<byte[], MsgPackSerializationContext, MsgPackDeserializationContext>
+public class MsgPackSerializationFormat implements SerializationFormat<byte[], byte[], MsgPackSerializationContext, MsgPackDeserializationContext>
 {
     @Override
     public void configure(final TemplateEngine templateEngine)
