@@ -132,11 +132,7 @@ import pl.north93.serializer.platform.template.filter.TemplateFilter;
         if (type instanceof Class)
         {
             final Class<?> clazz = (Class<?>) type;
-
-            final Template<?, ?, ?> template = this.templateFactory.createTemplate(this, clazz);
-            this.register(new ExactTypeIgnoreGenericFilter(clazz), template);
-
-            return this.genericCast(template);
+            return this.genericCast(this.templateFactory.createAndRegisterTemplate(this, clazz));
         }
 
         throw new RuntimeException(type.getTypeName());

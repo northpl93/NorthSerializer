@@ -5,11 +5,10 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.invoke.MethodType;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
+import lombok.ToString;
 import pl.north93.serializer.platform.reflect.InstanceCreator;
 
+@ToString
 /*default*/ class MethodHandleConstructorCreator<T> implements InstanceCreator<T>
 {
     private static final Lookup LOOKUP = MethodHandles.lookup();
@@ -41,11 +40,5 @@ import pl.north93.serializer.platform.reflect.InstanceCreator;
         {
             throw new RuntimeException(throwable);
         }
-    }
-
-    @Override
-    public String toString()
-    {
-        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString()).append("constructor", this.constructor).toString();
     }
 }
