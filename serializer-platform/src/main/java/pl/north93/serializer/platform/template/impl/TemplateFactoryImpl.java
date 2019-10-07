@@ -44,6 +44,8 @@ import pl.north93.serializer.platform.template.field.ReflectionFieldInfo;
         final List<ITemplateElement> elements = new LinkedList<>();
         final Field[] fields = FieldUtils.getAllFields(clazz);
 
+        final TemplateImpl<T> template = new TemplateImpl<>(templateEngine.getInstanceCreator(clazz), elements);
+
         for (final Field field : fields)
         {
             field.setAccessible(true);
@@ -53,20 +55,25 @@ import pl.north93.serializer.platform.template.field.ReflectionFieldInfo;
             }
 
             final ReflectionFieldInfo fieldInfo = new ReflectionFieldInfo(field);
-
-            final NorthCustomTemplate northCustomTemplate = field.getAnnotation(NorthCustomTemplate.class);
-            if (northCustomTemplate != null)
+            if (clazz.equals(field.getType()))
             {
-                final Template template = templateEngine.instantiateClass(northCustomTemplate.value());
                 elements.add(this.templateElementFactory.getTemplateElement(field, fieldInfo, template));
                 continue;
             }
 
-            final var template = templateEngine.getTemplate(fieldInfo.getType());
-            elements.add(this.templateElementFactory.getTemplateElement(field, fieldInfo, template));
+            final NorthCustomTemplate northCustomTemplate = field.getAnnotation(NorthCustomTemplate.class);
+            if (northCustomTemplate != null)
+            {
+                final Template customTemplate = templateEngine.instantiateClass(northCustomTemplate.value());
+                elements.add(this.templateElementFactory.getTemplateElement(field, fieldInfo, customTemplate));
+                continue;
+            }
+
+            final var fieldTemplate = templateEngine.getTemplate(fieldInfo.getType());
+            elements.add(this.templateElementFactory.getTemplateElement(field, fieldInfo, fieldTemplate));
         }
 
-        return new TemplateImpl<>(templateEngine.getInstanceCreator(clazz), elements);
+        return template;
     }
 
     private boolean shouldSkipField(final Field field)
