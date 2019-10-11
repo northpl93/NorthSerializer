@@ -3,3 +3,15 @@ dependencies {
 
     compile 'org.apache.commons:commons-lang3:3.9'
 }
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "https://maven.pkg.github.com/NorthPL") {
+                authentication(userName: "NorthPL", password: System.env.TOKEN)
+            }
+            pom.groupId = project.group
+            pom.artifactId = 'platform'
+        }
+    }
+}
