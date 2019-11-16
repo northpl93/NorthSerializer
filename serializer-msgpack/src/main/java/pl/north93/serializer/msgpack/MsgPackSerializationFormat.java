@@ -22,6 +22,15 @@ import pl.north93.serializer.platform.template.filter.ExactTypeIgnoreGenericFilt
 
 public class MsgPackSerializationFormat implements SerializationFormat<byte[], byte[], MsgPackSerializationContext, MsgPackDeserializationContext>
 {
+    private final MsgPackSerializationConfiguration serializationConfiguration;
+    private final MsgPackDeserializationConfiguration deserializationConfiguration;
+
+    public MsgPackSerializationFormat()
+    {
+        this.serializationConfiguration = new MsgPackSerializationConfiguration();
+        this.deserializationConfiguration = new MsgPackDeserializationConfiguration();
+    }
+
     @Override
     public void configure(final TemplateEngine templateEngine)
     {
@@ -41,13 +50,13 @@ public class MsgPackSerializationFormat implements SerializationFormat<byte[], b
     @Override
     public SerializationConfiguration<MsgPackSerializationContext> createDefaultSerializationConfig()
     {
-        return new MsgPackSerializationConfiguration();
+        return this.serializationConfiguration;
     }
 
     @Override
     public DeserializationConfiguration<byte[], MsgPackDeserializationContext> createDefaultDeserializationConfig()
     {
-        return new MsgPackDeserializationConfiguration();
+        return this.deserializationConfiguration;
     }
 
     @Nullable

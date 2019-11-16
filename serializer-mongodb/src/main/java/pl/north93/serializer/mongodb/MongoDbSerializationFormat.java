@@ -31,6 +31,13 @@ import pl.north93.serializer.platform.template.filter.ExactTypeIgnoreGenericFilt
 
 public class MongoDbSerializationFormat implements SerializationFormat<BsonWriter, BsonReader, MongoDbSerializationContext, MongoDbDeserializationContext>
 {
+    private final MongoDbDeserializationConfiguration deserializationConfiguration;
+
+    public MongoDbSerializationFormat()
+    {
+        this.deserializationConfiguration = new MongoDbDeserializationConfiguration();
+    }
+
     @Override
     public void configure(final TemplateEngine templateEngine)
     {
@@ -54,7 +61,7 @@ public class MongoDbSerializationFormat implements SerializationFormat<BsonWrite
     @Override
     public DeserializationConfiguration<BsonReader, MongoDbDeserializationContext> createDefaultDeserializationConfig()
     {
-        return new MongoDbDeserializationConfiguration();
+        return this.deserializationConfiguration;
     }
 
     @Nullable
