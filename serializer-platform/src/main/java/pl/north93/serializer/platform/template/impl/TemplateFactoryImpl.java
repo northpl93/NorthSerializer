@@ -56,11 +56,6 @@ import pl.north93.serializer.platform.template.filter.ExactTypeIgnoreGenericFilt
             }
 
             final ReflectionFieldInfo fieldInfo = new ReflectionFieldInfo(field);
-            if (clazz.equals(field.getType()))
-            {
-                elements.add(this.templateElementFactory.getTemplateElement(field, fieldInfo, template));
-                continue;
-            }
 
             final NorthCustomTemplate northCustomTemplate = field.getAnnotation(NorthCustomTemplate.class);
             if (northCustomTemplate != null)
