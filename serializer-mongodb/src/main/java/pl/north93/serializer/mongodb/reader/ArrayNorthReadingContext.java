@@ -47,7 +47,7 @@ import org.bson.types.ObjectId;
             return this.hasMore();
         }
 
-        throw new IllegalStateException("There is no names in array so we can't check key exists!");
+        throw new IllegalStateException("There is no names in array so we can't check does key exists!");
     }
 
     @Override

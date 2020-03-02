@@ -6,9 +6,11 @@ import java.util.Arrays;
 
 import lombok.AllArgsConstructor;
 import lombok.ToString;
+import pl.north93.serializer.platform.property.SerializableObject;
+import pl.north93.serializer.platform.property.impl.InstantiationManager;
 import pl.north93.serializer.platform.reflect.ClassResolver;
-import pl.north93.serializer.platform.reflect.InstanceCreator;
 import pl.north93.serializer.platform.reflect.ReflectionEngine;
+import pl.north93.serializer.platform.reflect.UnsupportedTypeException;
 
 @ToString
 @AllArgsConstructor
@@ -36,15 +38,15 @@ public class ReflectionEngineImpl implements ReflectionEngine
             return (Class<?>) parameterizedType.getRawType();
         }
 
-        throw new IllegalArgumentException(type.getTypeName());
+        throw new UnsupportedTypeException(type);
     }
 
     @Override
-    public Type[] getTypeParameters(final Type type)
+    public Type[] getGenericParameters(final Type type)
     {
         if (type instanceof Class)
         {
-            final Class clazz = (Class) type;
+            final Class<?> clazz = (Class<?>) type;
             final Type[] types = new Type[clazz.getTypeParameters().length];
             Arrays.fill(types, Object.class);
             return types;
@@ -55,18 +57,30 @@ public class ReflectionEngineImpl implements ReflectionEngine
             return parameterizedType.getActualTypeArguments();
         }
 
-        throw new IllegalArgumentException(type.getTypeName());
+        throw new UnsupportedTypeException(type);
     }
 
     @Override
-    public Type createParameterizedType(final Class clazz, final Type[] parameters)
+    public ParameterizedType createParameterizedType(final Class<?> clazz, final Type[] parameters)
     {
+        if (clazz.getTypeParameters().length != parameters.length)
+        {
+            // For example, we can't pass Map.class, [Integer] into this method because Map requires two parameters.
+            throw new IllegalArgumentException("Amount of specified generic parameters doesn't match amount of class parameters.");
+        }
+
         return new NorthParameterizedType(clazz, parameters);
     }
 
     @Override
-    public <T> InstanceCreator<T> getInstanceCreator(final Class<T> clazz)
+    public <T> T instantiateClass(final Class<T> clazz)
     {
-        return this.instantiationManager.getInstanceCreator(clazz);
+        return this.instantiationManager.instantiateClass(clazz);
+    }
+
+    @Override
+    public <T> SerializableObject<T> getSerializableObjectFrom(final Class<T> clazz)
+    {
+        return this.instantiationManager.getSerializableObject(clazz);
     }
 }

@@ -8,8 +8,6 @@ import org.msgpack.core.MessageUnpacker;
 
 import pl.north93.serializer.msgpack.MsgPackDeserializationContext;
 import pl.north93.serializer.msgpack.MsgPackSerializationContext;
-import pl.north93.serializer.platform.context.DeserializationContext;
-import pl.north93.serializer.platform.context.SerializationContext;
 import pl.north93.serializer.platform.template.Template;
 import pl.north93.serializer.platform.template.TemplateEngine;
 import pl.north93.serializer.platform.template.field.CustomFieldInfo;
@@ -68,6 +66,6 @@ public class MsgPackSetTemplate implements Template<Set<Object>, MsgPackSerializ
 
     private Type getGenericType(final TemplateEngine templateEngine, final Type type)
     {
-        return templateEngine.getTypeParameters(type)[0];
+        return templateEngine.getGenericParameters(type)[0];
     }
 }

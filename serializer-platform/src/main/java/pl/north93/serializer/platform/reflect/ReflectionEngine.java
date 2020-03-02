@@ -1,37 +1,49 @@
 package pl.north93.serializer.platform.reflect;
 
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+
+import pl.north93.serializer.platform.property.SerializableObject;
 
 public interface ReflectionEngine
 {
     /**
-     * Szuka klasy o podanej nazwie.
+     * Looks for a class with specified name.
+     * Uses {@link ClassResolver}.
      *
-     * @param name Nazwa klasy.
-     *
-     * @return Klasa o podanej nazwie.
+     * @param name Name of class.
+     * @return Class with specified name.
      */
     Class<?> findClass(String name);
 
     /**
-     * Próbuje przeksztalcic podany Type na Class.
-     * Spowoduje to ewentualną ukratę typu generycznego.
+     * Converts specified Type into Class.
+     * Causes loss of a generic parameters.
      *
-     * @param type Type do skonwertowania na Class.
-     *
-     * @return Class pobrane z danego Type.
+     * @param type {@link Type} to convert to a {@link Class}.
+     * @return Class from specified Type.
      */
     Class<?> getRawClassFromType(Type type);
 
-    Type[] getTypeParameters(Type type);
+    /**
+     * Tries to fetch generic parameters from specified Type.
+     * If there is no information about generic parameters, it will return array of Object.
+     *
+     * @param type Type to fetch parameters from.
+     * @return Generic parameters of specified Type.
+     */
+    Type[] getGenericParameters(Type type);
 
-    Type createParameterizedType(Class clazz, Type[] parameters);
+    /**
+     * Creates new instance of Type with specified generic parameters.
+     *
+     * @param clazz Class with generic parameters.
+     * @param parameters Values of generic parameters.
+     * @return New instance of Type with specified generic information.
+     */
+    ParameterizedType createParameterizedType(Class<?> clazz, Type... parameters);
 
-    <T> InstanceCreator<T> getInstanceCreator(Class<T> clazz);
+    <T> T instantiateClass(Class<T> clazz);
 
-    default <T> T instantiateClass(final Class<T> clazz)
-    {
-        final InstanceCreator<T> instanceCreator = this.getInstanceCreator(clazz);
-        return instanceCreator.newInstance();
-    }
+    <T> SerializableObject<T> getSerializableObjectFrom(Class<T> clazz);
 }

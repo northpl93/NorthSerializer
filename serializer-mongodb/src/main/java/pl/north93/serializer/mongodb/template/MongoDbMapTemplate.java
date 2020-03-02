@@ -59,7 +59,7 @@ public class MongoDbMapTemplate implements Template<Map<String, Object>, MongoDb
 
     protected Type getValueGenericType(final TemplateEngine templateEngine, final Type type)
     {
-        return templateEngine.getTypeParameters(type)[1];
+        return templateEngine.getGenericParameters(type)[1];
     }
 
     @SuppressWarnings("unchecked")

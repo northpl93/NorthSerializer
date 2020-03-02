@@ -1,24 +1,24 @@
 package pl.north93.serializer.platform.template.field;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.Optional;
 
 import lombok.ToString;
 import pl.north93.serializer.platform.annotations.NorthField;
+import pl.north93.serializer.platform.property.ObjectProperty;
 
 @ToString
-public final class ReflectionFieldInfo implements FieldInfo
+public final class ObjectPropertyFieldInfo implements FieldInfo
 {
     private final String name;
     private final Type type;
 
-    public ReflectionFieldInfo(final Field field)
+    public ObjectPropertyFieldInfo(final ObjectProperty property)
     {
-        final Optional<NorthField> customizations = Optional.ofNullable(field.getAnnotation(NorthField.class));
+        final Optional<NorthField> customizations = property.getAnnotation(NorthField.class);
 
-        this.name = computeName(field, customizations);
-        this.type = computeType(field, customizations);
+        this.name = computeName(property, customizations);
+        this.type = computeType(property, customizations);
     }
 
     @Override
@@ -33,31 +33,31 @@ public final class ReflectionFieldInfo implements FieldInfo
         return this.type;
     }
 
-    private static String computeName(final Field field, final Optional<NorthField> customizations)
+    private static String computeName(final ObjectProperty property, final Optional<NorthField> customizations)
     {
         return customizations.map(_customizations ->
         {
             final String customName = _customizations.name();
             if (customName.equals(NorthField.Default.DEFAULT_STRING))
             {
-                return field.getName();
+                return property.getName();
             }
 
             return customName;
-        }).orElseGet(field::getName);
+        }).orElseGet(property::getName);
     }
 
-    private static Type computeType(final Field field, final Optional<NorthField> customizations)
+    private static Type computeType(final ObjectProperty property, final Optional<NorthField> customizations)
     {
         return customizations.map(_customizations ->
         {
             final Class<?> customType = _customizations.type();
             if (customType.equals(NorthField.Default.class))
             {
-                return field.getGenericType();
+                return property.getGenericType();
             }
 
             return customType;
-        }).orElseGet(field::getGenericType);
+        }).orElseGet(property::getGenericType);
     }
 }

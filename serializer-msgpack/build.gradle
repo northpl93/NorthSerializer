@@ -2,3 +2,14 @@ dependencies {
     compile project(':serializer-platform')
     compile 'org.msgpack:msgpack-core:0.8.18'
 }
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'pl.north93.serializer'
+            artifactId = 'msgpack'
+
+            from components.java
+        }
+    }
+}

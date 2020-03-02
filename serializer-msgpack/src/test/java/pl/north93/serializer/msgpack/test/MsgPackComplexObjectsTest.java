@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.north93.serializer.msgpack.MsgPackSerializationFormat;
 import pl.north93.serializer.platform.NorthSerializer;
 import pl.north93.serializer.platform.template.impl.NorthSerializerImpl;
@@ -21,6 +22,7 @@ public class MsgPackComplexObjectsTest
     private final NorthSerializer<byte[], byte[]> serializer = new NorthSerializerImpl<>(new MsgPackSerializationFormat());
 
     @Data
+    @NoArgsConstructor
     @AllArgsConstructor
     public static class ComplexObject
     {

@@ -3,6 +3,7 @@ package pl.north93.serializer.platform.template.impl;
 import static java.lang.reflect.Modifier.isAbstract;
 
 
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.time.Duration;
 import java.time.Instant;
@@ -16,8 +17,9 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import pl.north93.serializer.platform.context.DeserializationContext;
 import pl.north93.serializer.platform.context.SerializationContext;
 import pl.north93.serializer.platform.format.TypePredictor;
-import pl.north93.serializer.platform.reflect.InstanceCreator;
 import pl.north93.serializer.platform.reflect.ReflectionEngine;
+import pl.north93.serializer.platform.property.SerializableObject;
+import pl.north93.serializer.platform.reflect.UnsupportedTypeException;
 import pl.north93.serializer.platform.template.Template;
 import pl.north93.serializer.platform.template.TemplateEngine;
 import pl.north93.serializer.platform.template.TemplateFactory;
@@ -135,7 +137,7 @@ import pl.north93.serializer.platform.template.filter.TemplateFilter;
             return this.genericCast(this.templateFactory.createAndRegisterTemplate(this, clazz));
         }
 
-        throw new RuntimeException(type.getTypeName());
+        throw new UnsupportedTypeException(type);
     }
 
     @SuppressWarnings("unchecked")
@@ -157,20 +159,26 @@ import pl.north93.serializer.platform.template.filter.TemplateFilter;
     }
 
     @Override
-    public Type[] getTypeParameters(final Type type)
+    public Type[] getGenericParameters(final Type type)
     {
-        return this.reflectionEngine.getTypeParameters(type);
+        return this.reflectionEngine.getGenericParameters(type);
     }
 
     @Override
-    public Type createParameterizedType(final Class clazz, final Type[] parameters)
+    public ParameterizedType createParameterizedType(final Class<?> clazz, final Type[] parameters)
     {
         return this.reflectionEngine.createParameterizedType(clazz, parameters);
     }
 
     @Override
-    public <T> InstanceCreator<T> getInstanceCreator(final Class<T> clazz)
+    public <T> T instantiateClass(final Class<T> clazz)
     {
-        return this.reflectionEngine.getInstanceCreator(clazz);
+        return this.reflectionEngine.instantiateClass(clazz);
+    }
+
+    @Override
+    public <T> SerializableObject<T> getSerializableObjectFrom(final Class<T> clazz)
+    {
+        return this.reflectionEngine.getSerializableObjectFrom(clazz);
     }
 }

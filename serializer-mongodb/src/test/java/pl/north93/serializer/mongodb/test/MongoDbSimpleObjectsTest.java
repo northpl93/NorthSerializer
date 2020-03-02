@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.north93.serializer.mongodb.MongoDbSerializationConfiguration;
 import pl.north93.serializer.mongodb.MongoDbSerializationFormat;
 import pl.north93.serializer.platform.NorthSerializer;
@@ -24,6 +25,7 @@ public class MongoDbSimpleObjectsTest
     private final NorthSerializer<BsonWriter, BsonReader> serializer = new NorthSerializerImpl<>(new MongoDbSerializationFormat());
 
     @Data
+    @NoArgsConstructor
     @AllArgsConstructor
     public static class SimpleObject
     {

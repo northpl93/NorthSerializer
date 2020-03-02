@@ -116,9 +116,9 @@ public class DynamicTemplate implements Template<Object, SerializationContext, D
 
     // jesli posiadamy informacje o generycznym typie to go dodajemy;
     // w przeciwnym wypadku nie powodujemy bledu
-    private Type addMissingGenericType(final TemplateEngine templateEngine, final Type fieldType, final Class templateClass)
+    private Type addMissingGenericType(final TemplateEngine templateEngine, final Type fieldType, final Class<?> templateClass)
     {
-        final Type[] typeParameters = templateEngine.getTypeParameters(fieldType); // generic type
+        final Type[] typeParameters = templateEngine.getGenericParameters(fieldType); // generic type
         return typeParameters.length == 0 ? templateClass : templateEngine.createParameterizedType(templateClass, typeParameters);
     }
 

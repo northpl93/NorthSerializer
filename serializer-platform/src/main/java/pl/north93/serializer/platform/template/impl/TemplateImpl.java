@@ -5,8 +5,8 @@ import java.util.List;
 import lombok.ToString;
 import pl.north93.serializer.platform.context.DeserializationContext;
 import pl.north93.serializer.platform.context.SerializationContext;
-import pl.north93.serializer.platform.reflect.InstanceCreator;
-import pl.north93.serializer.platform.template.ITemplateElement;
+import pl.north93.serializer.platform.property.ObjectBuilder;
+import pl.north93.serializer.platform.property.SerializableObject;
 import pl.north93.serializer.platform.template.Template;
 import pl.north93.serializer.platform.template.field.FieldInfo;
 
@@ -14,12 +14,12 @@ import pl.north93.serializer.platform.template.field.FieldInfo;
 @SuppressWarnings("unchecked")
 /*default*/ class TemplateImpl<T> implements Template<T, SerializationContext, DeserializationContext>
 {
-    private final InstanceCreator<T> instanceCreator;
-    private final List<ITemplateElement> structure;
+    private final SerializableObject<T> serializableObject;
+    private final List<TemplateElement> structure;
 
-    public TemplateImpl(final InstanceCreator<T> instanceCreator, final List<ITemplateElement> structure)
+    public TemplateImpl(final SerializableObject<T> serializableObject, final List<TemplateElement> structure)
     {
-        this.instanceCreator = instanceCreator;
+        this.serializableObject = serializableObject;
         this.structure = structure;
     }
 
@@ -27,10 +27,9 @@ import pl.north93.serializer.platform.template.field.FieldInfo;
     public void serialise(final SerializationContext context, final FieldInfo field, final T object) throws Exception
     {
         context.enterObject(field);
-        for (final ITemplateElement templateElement : this.structure)
+        for (final TemplateElement templateElement : this.structure)
         {
-            //API.debug("TemplateImpl :: TemplateElement :: " + templateElement);
-            final Object value = templateElement.get(object);
+            final Object value = templateElement.getProperty().getValue(object);
             if (value != null)
             {
                 final Template template = templateElement.getTemplate();
@@ -50,8 +49,8 @@ import pl.north93.serializer.platform.template.field.FieldInfo;
         context.enterObject(field);
         try
         {
-            final T instance = this.instanceCreator.newInstance();
-            for (final ITemplateElement templateElement : this.structure)
+            final ObjectBuilder<T> builder = this.serializableObject.createBuilder();
+            for (final TemplateElement templateElement : this.structure)
             {
                 if (context.trySkipNull(templateElement.getFieldInfo()))
                 {
@@ -59,10 +58,10 @@ import pl.north93.serializer.platform.template.field.FieldInfo;
                 }
 
                 final Template template = templateElement.getTemplate();
-                templateElement.set(instance, template.deserialize(context, templateElement.getFieldInfo()));
+                builder.set(templateElement.getProperty(), template.deserialize(context, templateElement.getFieldInfo()));
             }
 
-            return instance;
+            return builder.instantiate();
         }
         catch (final Exception e)
         {

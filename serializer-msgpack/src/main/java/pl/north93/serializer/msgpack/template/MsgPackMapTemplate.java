@@ -10,8 +10,6 @@ import org.msgpack.core.MessageUnpacker;
 
 import pl.north93.serializer.msgpack.MsgPackDeserializationContext;
 import pl.north93.serializer.msgpack.MsgPackSerializationContext;
-import pl.north93.serializer.platform.context.DeserializationContext;
-import pl.north93.serializer.platform.context.SerializationContext;
 import pl.north93.serializer.platform.template.Template;
 import pl.north93.serializer.platform.template.TemplateEngine;
 import pl.north93.serializer.platform.template.field.CustomFieldInfo;
@@ -73,7 +71,7 @@ public class MsgPackMapTemplate implements Template<Map<Object, Object>, MsgPack
 
     private Pair<Type, Type> getMapTypes(final TemplateEngine templateEngine, final FieldInfo field)
     {
-        final Type[] typeParameters = templateEngine.getTypeParameters(field.getType());
+        final Type[] typeParameters = templateEngine.getGenericParameters(field.getType());
         return Pair.of(typeParameters[0], typeParameters[1]);
     }
 

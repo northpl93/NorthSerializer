@@ -66,6 +66,6 @@ public class MsgPackListTemplate implements Template<List<Object>, MsgPackSerial
 
     private Type getGenericType(final TemplateEngine templateEngine, final Type type)
     {
-        return templateEngine.getTypeParameters(type)[0];
+        return templateEngine.getGenericParameters(type)[0];
     }
 }

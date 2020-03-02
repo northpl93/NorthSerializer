@@ -3,3 +3,14 @@ dependencies {
 
     compile 'org.apache.commons:commons-lang3:3.9'
 }
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'pl.north93.serializer'
+            artifactId = 'platform'
+
+            from components.java
+        }
+    }
+}
