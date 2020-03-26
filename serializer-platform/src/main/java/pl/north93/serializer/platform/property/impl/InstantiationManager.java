@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
+import java.util.function.Supplier;
 
 import lombok.ToString;
 import pl.north93.serializer.platform.annotations.NorthTransient;
@@ -25,10 +26,23 @@ public class InstantiationManager
     private final Map<Class<?>, InstantiationStrategy<?>> instantiationStrategies = new WeakHashMap<>();
     private final Map<Class<?>, SerializableObjectImpl<?>> serializableObjects = new WeakHashMap<>();
 
+    /**
+     * Allows to instantiate class with no-args constructor.
+     * @return New instance of class specified in a argument.
+     */
     public <T> T instantiateClass(final Class<T> clazz)
     {
         final InstantiationStrategy<T> strategy = this.getInstantiationStrategy(clazz, PropertiesList.getEmpty());
         return strategy.newInstance(new InstantiationParameters());
+    }
+
+    /**
+     * Allows to register predefined instance supplier for the specified Class,
+     * so instantiation will be faster.
+     */
+    public <T> void registerPredefinedInstantiator(final Class<T> clazz, final Supplier<T> constructorRef)
+    {
+        this.instantiationStrategies.put(clazz, new SupplierInstantiationStrategy<>(constructorRef));
     }
 
     @SuppressWarnings("unchecked")

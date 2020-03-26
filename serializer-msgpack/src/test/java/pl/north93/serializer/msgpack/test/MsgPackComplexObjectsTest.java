@@ -34,8 +34,8 @@ public class MsgPackComplexObjectsTest
     @Test
     public void testComplexObjectSerialization()
     {
-        final ArrayList<Object> objects = new ArrayList<>(Arrays.asList(5, false));
-        final ArrayList<String> strings = new ArrayList<>(Arrays.asList("test1", "test2"));
+        final List<Object> objects = new ArrayList<>(Arrays.asList(5, false));
+        final List<String> strings = new ArrayList<>(Arrays.asList("test1", "test2"));
         final ComplexObject beforeSerialization = new ComplexObject("test", objects, strings);
 
         final byte[] bytes = this.serializer.serialize(ComplexObject.class, beforeSerialization);

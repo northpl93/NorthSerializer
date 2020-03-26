@@ -32,7 +32,7 @@ public class MongoDbListsTest
     @AllArgsConstructor
     public static class ArrayListHolder
     {
-        ArrayList list;
+        ArrayList<Object> list;
     }
 
     @Test
@@ -42,7 +42,6 @@ public class MongoDbListsTest
         final MongoDbSerializationConfiguration configuration = new MongoDbSerializationConfiguration(new JsonWriter(stringWriter));
 
         this.serializer.serialize(ArrayListHolder.class, new ArrayListHolder(new ArrayList<>()), configuration);
-        System.out.println(stringWriter);
         final Object deserialized = this.serializer.deserialize(ArrayListHolder.class, new JsonReader(stringWriter.toString()));
 
         assertSame(ArrayListHolder.class, deserialized.getClass());
@@ -54,13 +53,12 @@ public class MongoDbListsTest
     @Test
     public void arrayListWithStrings()
     {
-        final ArrayList<String> strings = new ArrayList<>(Arrays.asList("test1", "test2", "test3"));
+        final ArrayList<Object> strings = new ArrayList<>(Arrays.asList("test1", "test2", "test3"));
 
         final StringWriter stringWriter = new StringWriter();
         final MongoDbSerializationConfiguration configuration = new MongoDbSerializationConfiguration(new JsonWriter(stringWriter));
 
         this.serializer.serialize(ArrayListHolder.class, new ArrayListHolder(strings), configuration);
-        System.out.println(stringWriter);
         final Object deserialized = this.serializer.deserialize(ArrayListHolder.class, new JsonReader(stringWriter.toString()));
 
         assertSame(ArrayListHolder.class, deserialized.getClass());
@@ -78,7 +76,6 @@ public class MongoDbListsTest
         final MongoDbSerializationConfiguration configuration = new MongoDbSerializationConfiguration(new JsonWriter(stringWriter));
 
         this.serializer.serialize(ArrayListHolder.class, new ArrayListHolder(strings), configuration);
-        System.out.println(stringWriter);
         final Object deserialized = this.serializer.deserialize(ArrayListHolder.class, new JsonReader(stringWriter.toString()));
 
         assertSame(ArrayListHolder.class, deserialized.getClass());
@@ -90,14 +87,13 @@ public class MongoDbListsTest
     @Test
     public void nestedArrayLists()
     {
-        final ArrayList<String> nestedList = new ArrayList<>(Collections.singletonList("test"));
-        final ArrayList<ArrayList<String>> outerList = new ArrayList<>(Collections.singletonList(nestedList));
+        final ArrayList<Object> nestedList = new ArrayList<>(Collections.singletonList("test"));
+        final ArrayList<Object> outerList = new ArrayList<>(Collections.singletonList(nestedList));
 
         final StringWriter stringWriter = new StringWriter();
         final MongoDbSerializationConfiguration configuration = new MongoDbSerializationConfiguration(new JsonWriter(stringWriter));
 
         this.serializer.serialize(ArrayListHolder.class, new ArrayListHolder(outerList), configuration);
-        System.out.println(stringWriter);
         final Object deserialized = this.serializer.deserialize(ArrayListHolder.class, new JsonReader(stringWriter.toString()));
 
         assertSame(ArrayListHolder.class, deserialized.getClass());

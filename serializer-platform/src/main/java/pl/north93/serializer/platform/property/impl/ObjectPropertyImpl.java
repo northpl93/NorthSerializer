@@ -51,7 +51,7 @@ class ObjectPropertyImpl implements ObjectProperty
         }
         catch (final IllegalAccessException e)
         {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to get value of property", e);
         }
     }
 
@@ -64,7 +64,7 @@ class ObjectPropertyImpl implements ObjectProperty
         }
         catch (final IllegalAccessException e)
         {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Failed to set value of property", e);
         }
     }
 }

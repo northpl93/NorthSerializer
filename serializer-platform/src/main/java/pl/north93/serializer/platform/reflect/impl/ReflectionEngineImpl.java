@@ -2,9 +2,11 @@ package pl.north93.serializer.platform.reflect.impl;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 
-import lombok.AllArgsConstructor;
 import lombok.ToString;
 import pl.north93.serializer.platform.property.SerializableObject;
 import pl.north93.serializer.platform.property.impl.InstantiationManager;
@@ -13,11 +15,20 @@ import pl.north93.serializer.platform.reflect.ReflectionEngine;
 import pl.north93.serializer.platform.reflect.UnsupportedTypeException;
 
 @ToString
-@AllArgsConstructor
 public class ReflectionEngineImpl implements ReflectionEngine
 {
     private final ClassResolver classResolver;
     private final InstantiationManager instantiationManager = new InstantiationManager();
+
+    public ReflectionEngineImpl(final ClassResolver classResolver)
+    {
+        this.classResolver = classResolver;
+
+        // register some predefined instantiators for common Java types
+        this.instantiationManager.registerPredefinedInstantiator(ArrayList.class, ArrayList::new);
+        this.instantiationManager.registerPredefinedInstantiator(HashSet.class, HashSet::new);
+        this.instantiationManager.registerPredefinedInstantiator(HashMap.class, HashMap::new);
+    }
 
     @Override
     public Class<?> findClass(final String name)

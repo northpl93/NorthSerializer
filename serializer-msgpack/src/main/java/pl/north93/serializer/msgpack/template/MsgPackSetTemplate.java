@@ -55,8 +55,8 @@ public class MsgPackSetTemplate implements Template<Set<Object>, MsgPackSerializ
     @SuppressWarnings("unchecked")
     private Set<Object> instantiateSet(final TemplateEngine templateEngine, final Type type)
     {
-        final Class<Set<Object>> listClass = (Class<Set<Object>>) templateEngine.getRawClassFromType(type);
-        return templateEngine.instantiateClass(listClass);
+        final Class<Set<Object>> setClass = (Class<Set<Object>>) templateEngine.getRawClassFromType(type);
+        return templateEngine.instantiateClass(setClass);
     }
 
     private FieldInfo createListFieldInfo(final Type type)

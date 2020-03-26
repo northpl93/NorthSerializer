@@ -27,18 +27,6 @@ public class MsgPackArraysTest
     }
 
     @Test
-    public void directArrayOfStringSerialization()
-    {
-        final String[] beforeSerialization = new String[]{"test1", "test2"};
-
-        final byte[] bytes = this.serializer.serialize(String[].class, beforeSerialization);
-        final Object deserialized = this.serializer.deserialize(String[].class, bytes);
-
-        assertSame(String[].class, deserialized.getClass());
-        assertArrayEquals(beforeSerialization, (Object[]) deserialized);
-    }
-
-    @Test
     public void objectWithArraysSerialization()
     {
         final ObjectWithArrays before = new ObjectWithArrays(new String[]{"testString1", "testString2"}, new Object[]{10, false});
@@ -52,4 +40,17 @@ public class MsgPackArraysTest
         assertArrayEquals(before.strings, after.strings);
         assertArrayEquals(before.objects, after.objects);
     }
+
+    @Test
+    public void directArrayOfStringSerialization()
+    {
+        final String[] beforeSerialization = new String[]{"test1", "test2"};
+
+        final byte[] bytes = this.serializer.serialize(String[].class, beforeSerialization);
+        final Object deserialized = this.serializer.deserialize(String[].class, bytes);
+
+        assertSame(String[].class, deserialized.getClass());
+        assertArrayEquals(beforeSerialization, (Object[]) deserialized);
+    }
+
 }

@@ -11,6 +11,7 @@ import java.util.function.Function;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
 import lombok.ToString;
+import pl.north93.serializer.platform.property.ObjectProperty;
 
 @ToString
 class PropertiesList
@@ -55,12 +56,17 @@ class PropertiesList
     {
         for (final ObjectPropertyImpl property : this.properties)
         {
-            if (parameter.getType().equals(property.getType()) && parameter.getName().equals(property.getName()))
+            if (this.checkParameterMatches(parameter, property))
             {
                 return property;
             }
         }
 
         return null;
+    }
+
+    private boolean checkParameterMatches(final Parameter parameter, final ObjectProperty property)
+    {
+        return parameter.getType().equals(property.getType()) && parameter.getName().equals(property.getName());
     }
 }

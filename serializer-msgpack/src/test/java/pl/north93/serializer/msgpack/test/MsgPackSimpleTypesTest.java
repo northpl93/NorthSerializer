@@ -36,6 +36,18 @@ public class MsgPackSimpleTypesTest
     }
 
     @Test
+    public void byteTest()
+    {
+        final byte test = 1;
+
+        final byte[] bytes = this.serializer.serialize(Byte.class, test);
+        final Object deserialized = this.serializer.deserialize(Byte.class, bytes);
+
+        assertSame(Byte.class, deserialized.getClass());
+        assertEquals(test, deserialized);
+    }
+
+    @Test
     public void shortTest()
     {
         final short test = 42;
@@ -84,10 +96,12 @@ public class MsgPackSimpleTypesTest
     @Test
     public void longTest()
     {
-        final byte[] bytes = this.serializer.serialize(Long.class, 42L);
+        final long test = 42L;
+
+        final byte[] bytes = this.serializer.serialize(Long.class, test);
         final Object deserialized = this.serializer.deserialize(Long.class, bytes);
 
         assertSame(Long.class, deserialized.getClass());
-        assertEquals(42L, deserialized);
+        assertEquals(test, deserialized);
     }
 }
