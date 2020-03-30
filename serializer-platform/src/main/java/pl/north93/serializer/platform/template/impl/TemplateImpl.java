@@ -32,7 +32,7 @@ import pl.north93.serializer.platform.template.field.FieldInfo;
             final Object value = templateElement.getProperty().getValue(object);
             if (value != null)
             {
-                final Template template = templateElement.getTemplate();
+                final var template = templateElement.getTemplate();
                 template.serialise(context, templateElement.getFieldInfo(), value);
             }
             else
@@ -54,10 +54,11 @@ import pl.north93.serializer.platform.template.field.FieldInfo;
             {
                 if (context.trySkipNull(templateElement.getFieldInfo()))
                 {
+                    builder.set(templateElement.getProperty(), null);
                     continue; // next value is null so we not try to deserialize it
                 }
 
-                final Template template = templateElement.getTemplate();
+                final var template = templateElement.getTemplate();
                 builder.set(templateElement.getProperty(), template.deserialize(context, templateElement.getFieldInfo()));
             }
 

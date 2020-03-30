@@ -25,13 +25,13 @@ final class InstantiationParameters
      */
     public Object pullValue(final ObjectProperty property)
     {
-        final Object value = this.parameters.remove(property);
-        if (value == null)
+        if (this.parameters.containsKey(property))
         {
-            throw new IllegalStateException(); //todo
+            // we MUST use containsKey, because there may be null values
+            return this.parameters.remove(property);
         }
 
-        return value;
+        throw new IllegalStateException(); //todo
     }
 
     public void putValuesIntoObject(final Object instance)

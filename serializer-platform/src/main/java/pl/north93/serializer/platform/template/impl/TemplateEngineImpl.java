@@ -100,7 +100,7 @@ import pl.north93.serializer.platform.template.filter.TemplateFilter;
         {
             writeLock.lock();
 
-            // TreeMap zapewnie od razu poprawne sortowanie po priorytecie
+            // TreeMap will sort templates automatically
             this.templates.put(filter, template);
         }
         finally
@@ -134,10 +134,25 @@ import pl.north93.serializer.platform.template.filter.TemplateFilter;
         if (type instanceof Class)
         {
             final Class<?> clazz = (Class<?>) type;
-            return this.genericCast(this.templateFactory.createAndRegisterTemplate(this, clazz));
+            return this.generateTemplate(clazz);
         }
 
         throw new UnsupportedTypeException(type);
+    }
+
+    // protect whole template generation by lock, because
+    private Template<Object, SerializationContext, DeserializationContext> generateTemplate(final Class<?> type)
+    {
+        final Lock writeLock = this.templatesLock.writeLock();
+        try
+        {
+            writeLock.lock();
+            return this.genericCast(this.templateFactory.createAndRegisterTemplate(this, type));
+        }
+        finally
+        {
+            writeLock.unlock();
+        }
     }
 
     @SuppressWarnings("unchecked")

@@ -13,5 +13,7 @@ public interface SerializableObject<T>
      */
     Collection<? extends ObjectProperty> getProperties();
 
+    ObjectProperty getPropertyByName(String name);
+
     ObjectBuilder<T> createBuilder();
 }

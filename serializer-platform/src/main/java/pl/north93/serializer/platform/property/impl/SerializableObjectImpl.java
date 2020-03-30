@@ -25,6 +25,20 @@ class SerializableObjectImpl<T> implements SerializableObject<T>
         return this.properties.getProperties();
     }
 
+    @Override
+    public ObjectProperty getPropertyByName(final String name)
+    {
+        for (final ObjectPropertyImpl property : this.properties.getProperties())
+        {
+            if (property.getName().equals(name))
+            {
+                return property;
+            }
+        }
+
+        return null;
+    }
+
     public InstantiationStrategy<T> getInstantiationStrategy()
     {
         return this.instantiationStrategy;
