@@ -32,7 +32,7 @@ class ConstructorInstantiationStrategy<T> implements InstantiationStrategy<T>
         }
         catch (final InstantiationException | IllegalAccessException | InvocationTargetException e)
         {
-            throw new IllegalStateException(); // todo
+            throw new IllegalStateException(e); // todo
         }
     }
 }

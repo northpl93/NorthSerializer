@@ -85,6 +85,12 @@ public class InstantiationManager
     {
         for (final Constructor<?> constructor : clazz.getConstructors())
         {
+            if (! constructor.trySetAccessible())
+            {
+                // if we cannot access constructor in normal way, then skip
+                continue;
+            }
+
             final InstantiationStrategy<T> strategy = this.createStrategyForConstructor(propertiesList, constructor);
             if (strategy == null)
             {

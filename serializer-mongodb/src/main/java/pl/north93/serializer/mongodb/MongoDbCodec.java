@@ -26,9 +26,10 @@ public class MongoDbCodec<T> implements Codec<T>
     }
 
     @Override
-    public void encode(final BsonWriter bsonWriter, final Object o, final EncoderContext encoderContext)
+    public void encode(final BsonWriter bsonWriter, final Object value, final EncoderContext encoderContext)
     {
-        this.serializer.serialize(this.type, o);
+        final MongoDbSerializationConfiguration configuration = new MongoDbSerializationConfiguration(bsonWriter);
+        this.serializer.serialize(this.type, value, configuration);
     }
 
     @Override
