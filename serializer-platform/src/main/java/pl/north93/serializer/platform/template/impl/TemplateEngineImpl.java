@@ -37,6 +37,7 @@ import pl.north93.serializer.platform.template.builtin.LongTemplate;
 import pl.north93.serializer.platform.template.builtin.ShortTemplate;
 import pl.north93.serializer.platform.template.builtin.StringTemplate;
 import pl.north93.serializer.platform.template.filter.ExactTypeIgnoreGenericFilter;
+import pl.north93.serializer.platform.template.filter.PrimitiveTypeFilter;
 import pl.north93.serializer.platform.template.filter.TemplateFilter;
 
 /*default*/ class TemplateEngineImpl implements TemplateEngine
@@ -59,13 +60,13 @@ import pl.north93.serializer.platform.template.filter.TemplateFilter;
 
         // simple default types
         this.register(new ExactTypeIgnoreGenericFilter(String.class), new StringTemplate());
-        this.register(new ExactTypeIgnoreGenericFilter(Boolean.class), new BooleanTemplate());
-        this.register(new ExactTypeIgnoreGenericFilter(Byte.class), new ByteTemplate());
-        this.register(new ExactTypeIgnoreGenericFilter(Short.class), new ShortTemplate());
-        this.register(new ExactTypeIgnoreGenericFilter(Integer.class), new IntegerTemplate());
-        this.register(new ExactTypeIgnoreGenericFilter(Float.class), new FloatTemplate());
-        this.register(new ExactTypeIgnoreGenericFilter(Double.class), new DoubleTemplate());
-        this.register(new ExactTypeIgnoreGenericFilter(Long.class), new LongTemplate());
+        this.register(new PrimitiveTypeFilter(boolean.class, Boolean.class), new BooleanTemplate());
+        this.register(new PrimitiveTypeFilter(byte.class, Byte.class), new ByteTemplate());
+        this.register(new PrimitiveTypeFilter(short.class, Short.class), new ShortTemplate());
+        this.register(new PrimitiveTypeFilter(int.class, Integer.class), new IntegerTemplate());
+        this.register(new PrimitiveTypeFilter(float.class, Float.class), new FloatTemplate());
+        this.register(new PrimitiveTypeFilter(double.class, Double.class), new DoubleTemplate());
+        this.register(new PrimitiveTypeFilter(long.class, Long.class), new LongTemplate());
 
         // complex default types
         this.register(new ExactTypeIgnoreGenericFilter(Date.class), new DateTemplate());
@@ -77,6 +78,11 @@ import pl.north93.serializer.platform.template.filter.TemplateFilter;
     public boolean isNeedsDynamicResolution(final Type type)
     {
         final Class<?> clazz = this.reflectionEngine.getRawClassFromType(type);
+        if (clazz.isPrimitive())
+        {
+            return false;
+        }
+
         return clazz.isInterface() || isAbstract(clazz.getModifiers()) || clazz == Object.class;
     }
 
