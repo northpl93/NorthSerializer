@@ -92,9 +92,17 @@ public class ReflectionEngineImplTest
     @Test
     public void instantiateClassShouldFailWithClassesWithoutDefaultConstructor()
     {
-        Assertions.assertThrows(NoInstantiationStrategyException.class, () ->
+        try
         {
-            this.reflectionEngine.instantiateClass(UUID.class);
-        });
+            System.setProperty("pl.north93.serializer.platform.allowUnsafe", "false");
+            Assertions.assertThrows(NoInstantiationStrategyException.class, () ->
+            {
+                this.reflectionEngine.instantiateClass(UUID.class);
+            });
+        }
+        finally
+        {
+            System.setProperty("pl.north93.serializer.platform.allowUnsafe", "true");
+        }
     }
 }

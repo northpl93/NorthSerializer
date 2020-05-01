@@ -100,6 +100,11 @@ public class InstantiationManager
             return strategy;
         }
 
+        if (this.isUnsafeAllowed())
+        {
+            return new UnsafeInstantiationStrategy<>(clazz);
+        }
+
         throw new NoInstantiationStrategyException(clazz);
     }
 
@@ -118,5 +123,11 @@ public class InstantiationManager
         }
 
         return new ConstructorInstantiationStrategy<>((Constructor<T>) constructor, properties);
+    }
+
+    private boolean isUnsafeAllowed()
+    {
+        final String property = System.getProperty("pl.north93.serializer.platform.allowUnsafe", "true");
+        return Boolean.parseBoolean(property);
     }
 }
