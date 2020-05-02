@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
+import pl.north93.serializer.msgpack.template.MsgPackFastByteArrayTemplate;
 import pl.north93.serializer.msgpack.template.MsgPackArrayTemplate;
 import pl.north93.serializer.msgpack.template.MsgPackListTemplate;
 import pl.north93.serializer.msgpack.template.MsgPackMapTemplate;
@@ -17,6 +18,7 @@ import pl.north93.serializer.platform.format.SerializationConfiguration;
 import pl.north93.serializer.platform.format.SerializationFormat;
 import pl.north93.serializer.platform.format.TypePredictor;
 import pl.north93.serializer.platform.template.TemplateEngine;
+import pl.north93.serializer.platform.template.TemplatePriority;
 import pl.north93.serializer.platform.template.filter.AnyInheritedTypeFilter;
 import pl.north93.serializer.platform.template.filter.ExactTypeIgnoreGenericFilter;
 
@@ -38,6 +40,7 @@ public class MsgPackSerializationFormat implements SerializationFormat<byte[], b
 
         // zwykle typy
         templateEngine.register(new ExactTypeIgnoreGenericFilter(UUID.class), new MsgPackUuidTemplate());
+        templateEngine.register(new ExactTypeIgnoreGenericFilter(byte[].class, TemplatePriority.HIGH), new MsgPackFastByteArrayTemplate());
 
         // kolekcje
         templateEngine.register(new AnyInheritedTypeFilter(List.class), new MsgPackListTemplate());

@@ -22,7 +22,7 @@ public class MsgPackArrayTemplate implements Template<Object, MsgPackSerializati
         @Override
         public int getPriority()
         {
-            return TemplatePriority.HIGHEST;
+            return TemplatePriority.NORMAL;
         }
 
         @Override

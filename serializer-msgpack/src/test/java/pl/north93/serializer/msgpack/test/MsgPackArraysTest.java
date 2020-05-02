@@ -53,4 +53,15 @@ public class MsgPackArraysTest
         assertArrayEquals(beforeSerialization, (Object[]) deserialized);
     }
 
+    @Test
+    public void directArrayOfBytesSerialization()
+    {
+        final byte[] beforeSerialization = new byte[] { 1, 2, 3 };
+
+        final byte[] bytes = this.serializer.serialize(byte[].class, beforeSerialization);
+        final Object deserialized = this.serializer.deserialize(byte[].class, bytes);
+
+        assertSame(byte[].class, deserialized.getClass());
+        assertArrayEquals(beforeSerialization, (byte[]) deserialized);
+    }
 }

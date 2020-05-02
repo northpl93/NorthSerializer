@@ -78,7 +78,7 @@ import pl.north93.serializer.platform.template.filter.TemplateFilter;
     public boolean isNeedsDynamicResolution(final Type type)
     {
         final Class<?> clazz = this.reflectionEngine.getRawClassFromType(type);
-        if (clazz.isPrimitive())
+        if (clazz.isPrimitive() || clazz.isArray())
         {
             return false;
         }
